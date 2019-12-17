@@ -1,0 +1,500 @@
+{% load static %}
+{% load compress %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Djnago web development resume CV Mahdi hamzeh</title>
+    <!-- Meta tag Keywords -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="keywords" content="responsive web development Django backend rest django-rest-framework herpku devOp
+S3 amazon"/>
+    <!--// Meta tag Keywords -->
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+
+    <!-- css files -->
+    {#    <link rel="stylesheet" href="{% static "flexart/css/bootstrap.css" %}"> <!-- Bootstrap-Core-CSS -->#}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    {% compress css inline %}
+        <!-- Style-CSS -->
+        <link rel='stylesheet' href="{% static "flexart/css/style6.css" %}" type='text/css'/>
+        <link rel="stylesheet" href="{% static "flexart/css/style.css" %}" type="text/css" media="all"/>
+    {% endcompress %}
+
+    {% compress css %}
+        <!-- Font-Awesome-Icons-CSS -->
+        <link rel="stylesheet" href="{% static "flexart/css/fontawesome-all.css" %}" type="text/css"/>
+        <!-- go to top button css-->
+        <style>
+            html {
+                scroll-behavior: smooth;
+            }
+
+            #btn_gototop {
+                display: none; /* Hidden by default */
+                position: fixed; /* Fixed/sticky position */
+                bottom: 20px; /* Place the button at the bottom of the page */
+                right: 30px; /* Place the button 30px from the right */
+                z-index: 99; /* Make sure it does not overlap */
+                border: none; /* Remove borders */
+                outline: none; /* Remove outline */
+                background-color: darkorange; /* Set a background color */
+                color: white; /* Text color */
+                cursor: pointer; /* Add a mouse pointer on hover */
+                padding: 10px; /* Some padding */
+                border-radius: 10px; /* Rounded corners */
+                font-size: 18px; /* Increase font size */
+            }
+
+            #btn_gototop:hover {
+                background-color: #555; /* Add a dark-grey background on hover */
+            }
+        </style>
+        <!-- /go to top button css-->
+        <!-- //css files -->
+    {% endcompress %}
+
+
+    <!--web font-->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=latin-ext"
+          rel="stylesheet"/>
+    <!--//web font-->
+
+
+    {% block headcontent %}
+    {% endblock %}
+
+</head>
+<body>
+<!-- header -->
+<div class="header-top">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light  navbar-fixed-top" style="background-color: transparent;">
+            {#            <a class="navbar-brand" href="#">#}
+            {#                <!-- <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" alt=""> -->#}
+            {#                <img src="https://img.icons8.com/offices/30/26e07f/pin3.png" alt="logo">#}
+            {#            </a>#}
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    {% if not user.is_authenticated %}
+                        <li class="nav-item ">
+                            <a class="nav-link" href="{% url 'FLEX:login' %}?cancel={{ request.path }}">Sign In</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'FLEX:signup' %}?cancel={{ request.path }}">Register</a>
+                        </li>
+
+                    {% else %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Profile
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                                <a id="change_password_anchor" class="dropdown-item"
+                                   href="{% url 'FLEX:password_change' %}">Change Password</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            {#                        href="{% url 'FLEX:logout' %}"#}
+                            <form id="thisFormId" class="nav-link" method="post" action="{% url 'FLEX:logout' %}">
+                                {% csrf_token %}
+                                {% if next %} <input type="hidden" name="next" value="{{ next }}"> {% endif %}
+                                <a type="submit" onclick="document.getElementById('thisFormId').submit();">
+                                    <i class="fas fa-unlock"></i>Log out</a>
+                            </form>
+                        </li>
+
+                    {% endif %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'FLEX:index' %}">Home<span
+                                class="sr-only">(current)</span></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'FLEX:features' %}">Features</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Pages
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                            <a class="dropdown-item" href="{% url 'FLEX:about' %}" title="">About Us</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'FLEX:projects' %}" title="">Projects</a>
+                            <a class="dropdown-item" href="{% url 'FLEX:errorpage' %}">404 error page</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'FLEX:team' %}">Team</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Pricing Pages
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+{#                            <a class="dropdown-item" href="{% url 'FLEX:pricing' %}"> Default</a>#}
+{#                            <div class="dropdown-divider"></div>#}
+                            <a class="dropdown-item" href="{% url 'FLEX:pricing_light' %}"> Light Version</a>
+                            <a class="dropdown-item" href="{% url 'FLEX:pricing' %}"> Dark Version</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'FLEX:contact' %}">Contact</a>
+                    </li>
+
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Search"
+                           aria-label="Search">
+                    <button class="btn btn-sm btn-outline-info my-2 my-sm-0" type="submit"><i
+                            class="fa fa-search"></i></button>
+                </form>
+            </div>
+        </nav>
+    </header>
+</div>
+<!-- //header -->
+
+{% block content %}
+
+{% endblock %}
+
+{#{% block brands %}#}
+{#    <!-- brands -->#}
+{#    <section class="partners bg-light py-5">#}
+{#        <div class="container">#}
+{#            <div class="row partner-grids text-center">#}
+{#                <div class="col-md-2 col-4">#}
+{#                    <div class="brand bg-white">#}
+{#                        <a href="#"><i class="fab fa-angrycreative"></i></a>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-2 col-4">#}
+{#                    <div class="brand bg-white">#}
+{#                        <a href="#"><i class="fab fa-apper"></i></a>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-2 col-4">#}
+{#                    <div class="brand bg-white">#}
+{#                        <a href="#"><i class="fab fa-apple-pay"></i></a>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-2 col-4 mt-md-0 mt-3">#}
+{#                    <div class="brand bg-white">#}
+{#                        <a href="#"><i class="fab fa-aviato"></i></a>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-2 col-4 mt-md-0 mt-3">#}
+{#                    <div class="brand bg-white">#}
+{#                        <a href="#"><i class="fab fa-aws"></i></a>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-2 col-4 mt-md-0 mt-3">#}
+{#                    <div class="brand bg-white">#}
+{#                        <a href="#"><i class="fab fa-amazon-pay"></i></a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+{#    <!-- //brands -->#}
+{##}
+{#{% endblock %}#}
+
+<!-- footer -->
+<footer class="footer py-5">
+    <div class="container py-sm-4">
+        <div class="row">
+            <!-- subscribe -->
+            <div class="col-lg-4 col-md-6 footer-top">
+                <h3 class="mb-4 pb-3 w3f_title">Subscribe Us</h3>
+                <p>By subscribing to our mailing list you will always get latest news, offers and updates from us.</p>
+                <form action="#" method="post">
+                    <input type="email" name="Email" placeholder="Enter your email..." required="">
+                    <button class="btn1"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+            <!-- /subscribe -->
+
+            <!-- navigation -->
+            <div class="col-lg-2  col-md-6 footv3-left mt-md-0 mt-5">
+                <h3 class="mb-4 pb-3 w3f_title">Navigation</h3>
+                <ul class="list-agileits">
+                    <li>
+                        <a href="{% url 'FLEX:index' %}">
+                            Home
+                        </a>
+                    </li>
+                    <li class="my-2">
+                        <a href="{% url 'FLEX:about' %}">
+                            About Us
+                        </a>
+                    </li>
+                    <li class="my-2">
+                        <a href="{% url 'FLEX:projects' %}">
+                            Projects
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="{% url 'FLEX:features' %}">
+                            Features
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'FLEX:contact' %}">
+                            Contact Us
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /navigation -->
+
+            <div class="col-lg-3 col-md-6 mt-lg-0 mt-5">
+                <h3 class="mb-4 pb-3 w3f_title">Contact Us (Me)</h3>
+                <div class="fv3-contact">
+                    <span class="fas fa-envelope-open mr-2"></span>
+                    <p>
+                        <a href="mailto:ssdhdd85@gmail.com">ssdhdd85@gmail.com</a>
+                    </p>
+                </div>
+                <div class="fv3-contact my-3">
+                    <span class="fas fa-phone-volume mr-2"></span>
+                    <p>+98 935898 2636</p>
+                </div>
+                <div class="fv3-contact">
+                    <span class="fas fa-home mr-2"></span>
+                    <p>Hamadan, Hamadan Province, iran
+                        <br>saeedieh Street.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 footerv2-w3ls mt-lg-0 mt-5">
+                <h3 class="mb-4 w3f_title pb-3">Get In Touch</h3>
+                <p>Find Us(Me) on socials</p>
+                <ul class="social-iconsv2 agileinfo mt-4">
+                    {#                    <li>#}
+                    {#                        <a href="#">#}
+                    {#                            <i class="fab fa-facebook-f"></i>#}
+                    {#                        </a>#}
+                    {#                    </li>#}
+                    {#                    <li>#}
+                    {#                        <a href="#">#}
+                    {#                            <i class="fab fa-twitter"></i>#}
+                    {#                        </a>#}
+                    {#                    </li>#}
+                    {#                    <li>#}
+                    {#                        <a href="#">#}
+                    {#                            <i class="fab fa-google-plus-g"></i>#}
+                    {#                        </a>#}
+                    {#                    </li>#}
+                    <li>
+                        <a href="https://www.linkedin.com/in/mahdi-hamze-459b45194">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- //footer bottom -->
+</footer>
+<!-- //footer -->
+
+<!-- copyright -->
+<div class="cpy-right text-center">
+    <p>© 2018 Flex Art. All rights reserved | Design by
+        <a href="http://w3layouts.com"> W3layouts. adjusted by mahdi hamzeh for Django.</a>
+    </p>
+</div>
+<!-- /copyright -->
+
+
+{#<!-- dropdown nav -->#}
+{#{% compress js inline %}#}
+{#<script>#}
+{#    $(document).ready(function () {#}
+{#        $(".dropdown").hover(#}
+{#            function () {#}
+{#                $('.dropdown-menu', this).stop(true, true).slideDown("fast");#}
+{#                $(this).toggleClass('open');#}
+{#            },#}
+{#            function () {#}
+{#                $('.dropdown-menu', this).stop(true, true).slideUp("fast");#}
+{#                $(this).toggleClass('open');#}
+{#            }#}
+{#        );#}
+{#    });#}
+{#</script>#}
+{#{% endcompress %}#}
+<!-- //dropdown nav -->
+
+<!-- go to top button-->
+<button onclick="topFunction()" id="btn_gototop" class="btn btn-outline-danger"><i class="fas fa-angle-double-up"></i>
+</button>
+<!-- /go to top button-->
+
+<!-- js -->
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+{#<script src="{% static "flexart/js/bootstrap.js" %}"></script> <!-- Necessary-JavaScript-File-For-Bootstrap -->#}
+{##}
+{#<script src="{% static  'flexart/js/jquery-2.1.4.min.js' %}"></script>#}
+<!-- //js -->
+
+{% compress js %}
+    <!-- search overlay -->
+    <script src="{% static "flexart/js/modernizr-2.6.2.min.js" %}"></script>
+    <!-- //search overlay -->
+
+    <!--search jQuery-->
+    <script src="{% static "flexart/js/classie-search.js" %}"></script>
+    <script src="{% static "flexart/js/demo1-search.js" %}"></script>
+    <!--//search jQuery-->
+{% endcompress %}
+
+
+{% block footer_script %}
+
+{% endblock %}
+
+<!-- start-smooth-scrolling -->
+{% compress js %}
+    <script src="{% static "flexart/js/SmoothScroll.min.js" %}"></script>
+    <script src="{% static "flexart/js/move-top.js" %}"></script>
+    <script src="{% static "flexart/js/easing.js" %}"></script>
+{% endcompress %}
+
+{% compress js inline %}
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({scrollTop: $(this.hash).offset().top}, 1000);
+            });
+        });
+    </script>
+    <!-- here stars scrolling icon -->
+    <script>
+        $(document).ready(function () {
+            /*
+                var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+                };
+            */
+            $().UItoTop({easingType: 'easeOutQuart'});
+        });
+    </script>
+    <!-- //here ends scrolling icon -->
+
+    <!-- Support for loading cross-browser support -->
+    <script>
+        // if browser support 'loading' attribute
+        if ('loading' in HTMLImageElement.prototype) {
+            console.log("support 'loading' ");
+            const images = document.querySelectorAll("img.lazyload");
+            images.forEach(img => {
+                img.src = img.dataset.src;
+            });
+            // if browser support Intersection Observer API
+        } else if (("IntersectionObserver" in window)) {
+            console.log("Intersection Observer");
+            document.addEventListener("DOMContentLoaded", function () {
+                let lazyloadImages = document.querySelectorAll(".lazyload");
+                let imageObserver = new IntersectionObserver(function (entries, observer) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            const image = entry.target;
+                            image.src = image.dataset.src;
+                            image.classList.remove("lazyload");
+                            imageObserver.unobserve(image);
+                        }
+                    });
+                });
+
+                lazyloadImages.forEach(function (image) {
+                    imageObserver.observe(image);
+                });
+            });
+            // if browser don't support above (Last hope)
+        } else {
+            // Dynamically import the LazySizes library
+            let script = document.createElement("script");
+            script.async = true;
+            script.src =
+                "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.1.8/lazysizes.min.js";
+            document.body.appendChild(script);
+        }
+    </script>
+    <!-- /Support for loading cross-browser support -->
+
+
+    <!-- go to top button js-->
+    <script>
+        //Get the button:
+        mybutton = document.getElementById("btn_gototop");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+    </script>
+    <!-- /go to top button js-->
+{% endcompress %}
+
+
+</body>
+</html>

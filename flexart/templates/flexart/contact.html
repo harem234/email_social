@@ -1,0 +1,63 @@
+{% extends "flexart/base.html" %}
+{% load static %}
+
+{% block content %}
+    <!-- inner page banner -->
+    <section class="inner-page-banner">
+        <div class="page-heading text-center">
+            <h2>Contact Page</h2>
+            <span class="section_1-breadcrumbs"><a href="index.html"><i class="fa fa-home home_1"></i> Home</a> <span>/ Contact</span></span>
+        </div>
+    </section>
+    <!-- //inner page banner -->
+
+    <!-- contact -->
+    <section class="contact py-5">
+        <div class="container">
+            <div class="heading pb-4">
+                <h3 class="heading mb-2 text-center"><span>Contact </span> Us </h3>
+                <p class="para mb-5 text-center">
+
+                </p>
+            </div>
+            <div class="row contact-agileinfo">
+                <div class="col-md-7 contact-right">
+                    <form action="#" method="post">
+                        <input type="text" name="Name" placeholder="Name" required="">
+                        <input type="email" class="email" name="Email" placeholder="Email" required="">
+                        <input type="text" name="Phone no" placeholder="Phone" required="">
+                        <textarea name="Message" placeholder="Message" required=""></textarea>
+                        <div class="read mt-3">
+                            <a href="#">Submit <span class="btn ml-2"><i class="fas fa-arrow-right"
+                                                                         aria-hidden="true"></i></span></a>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-5 mt-md-0 mt-5 contact-left">
+                    <div class="address">
+                        <h5>Address:</h5>
+{#                        <p><span class="fa fa-home"></span></p>#}
+                    </div>
+                    <div class="address address-mdl">
+                        <h5>Phone:</h5>
+                        <p><span class="fa fa-phone"></span> +(98) 935 898 2636</p>
+{#                        <p><span class="fa fa-mobile"></span>+1(23) 4567 7891</p>#}
+                    </div>
+                    <div class="address">
+                        <h5>Email:</h5>
+                        <p><span class="fa fa-envelope"></span><a href="mailto:ssdhdd85@gmail.com">ssdhdd85@gmail.com</a>
+                        </p>
+{#                        <p><span class="fa fa-globe"></span> <a href="mailto:ssdhdd85@gmail.com">ssdhdd85@gmail.com</a>#}
+{#                        </p>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="agileits-w3layouts-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9469.368372755816!2d48.5010913453539!3d34.80120882112178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x1414e2f237aa82e0!2z2YLZh9mI2Ycg2Yfar9mF2KrYp9mG2Yc!5e0!3m2!1sen!2sus!4v1563079411929!5m2!1sen!2sus"
+                width="800" height="600" style="border:0" allowfullscreen></iframe>
+    </section>
+    <!-- //contact -->
+{% endblock %}

@@ -1,0 +1,26 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+django = "==2.*"
+# SocialGoogle dependency
+requests = "*"
+google-auth-oauthlib = "*"
+
+# deployment
+gunicorn = "*"
+whitenoise = {extras = ["brotli"],version = "*"}
+django-heroku = "*"
+brotli = "*"
+
+# before installing  django-compressor: pipenv run pip  install rcssmin --install-option="--without-c-extensions"
+# then pipenv update or pipenv lock
+django-compressor = "*"
+
+
+[requires]
+python_version = "3.7"
