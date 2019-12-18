@@ -3,9 +3,6 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 
 
-# hasattr(settings, 'SITE_ID')
-
-
 # signal: pre_delete is set for SocialProvider
 class SocialProvider(models.Model):
     SENTINEL = 'sentinel'
@@ -48,13 +45,13 @@ def get_sentinel_socialprovider():
 
 
 # hasattr(settings, 'SITE_ID') and settings.SITE_ID
-
+# Site.objects.get_current()
 
 class SocialAccount(models.Model):
     from django.core.validators import EmailValidator
 
     site = models.ForeignKey(to=Site, on_delete=models.CASCADE, null=False, blank=False,
-                             related_name="socialaccount_site", default=Site.objects.get_current().pk)
+                             related_name="socialaccount_site", default=settings.SITE_ID)
 
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=False, blank=False,
                              related_name="socialaccount_user")

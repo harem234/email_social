@@ -16,7 +16,6 @@ gunicorn = "*"
 whitenoise = {extras = ["brotli"],version = "*"}
 django-heroku = "*"
 brotli = "*"
-
 # before installing  django-compressor: pipenv run pip  install rcssmin --install-option="--without-c-extensions"
 # then pipenv update or pipenv lock
 django-compressor = "*"

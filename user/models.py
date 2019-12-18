@@ -1,14 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.sites.models import Site
-
+from django.conf import settings
 """related_name protocol for foreignKey
 <from table name>_<to table name> """
 
 
 class EmailUser(AbstractUser):
+    # default=Site.objects.get_current()
     site = models.ForeignKey(to=Site, on_delete=models.CASCADE, null=False, blank=False, related_name="user_site",
-                             default=Site.objects.get_current().pk, db_column='site')
+                             default=settings.SITE_ID)
     # new USERNAME_FIELD (email) must be overwrite and be required so: manage.py createsuperuser runs
     email = models.EmailField(unique=True, null=False, blank=False, )
     username = models.CharField(
