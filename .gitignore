@@ -130,4 +130,4 @@ user/migrations/*
 ### Django ###
 settings_develop.py
 
-staticfiles/
+#staticfiles/
