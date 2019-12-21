@@ -186,7 +186,7 @@ COMPRESS_FILTERS = {
 COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
 
 # social google
-GOOGLE_CLIENT_FILE_PATH = 'D:\\Projects\\django\\DJ_EmailUser_Social\\SocialGoogle\\client_secret.json'
+GOOGLE_CLIENT_FILE_PATH = os.environ['GOOGLE_CLIENT_FILE_PATH']
 GOOGLE_OPTIONS = {'prompt': 'consent'}
 
 #
