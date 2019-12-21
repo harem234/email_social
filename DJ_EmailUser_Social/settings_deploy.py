@@ -9,8 +9,7 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-# heroku
-import django_heroku
+
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -23,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'django-moon.herokuapp.com']
 
@@ -191,4 +190,6 @@ GOOGLE_CLIENT_FILE_PATH = 'D:\\Projects\\django\\DJ_EmailUser_Social\\SocialGoog
 GOOGLE_OPTIONS = {'prompt': 'consent'}
 
 # heroku
+import django_heroku
+
 django_heroku.settings(locals())
