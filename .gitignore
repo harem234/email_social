@@ -113,7 +113,7 @@ venv.bak/
 #migrations/
 
 ### Google client file ###
-SocialGoogle/client_secret.json
+#SocialGoogle/client_secret.json
 
 ### Migrations ###
 ALSTAR/migrations/*
