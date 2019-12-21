@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('flex/', include('flexart.urls')),
@@ -23,4 +24,5 @@ urlpatterns = [
     path('accounts/', include('user.urls')),
     path('', include('SocialGoogle.urls')),
     path('admin/', admin.site.urls),
+    path('google813daf404e148806.html', TemplateView.as_view(template_name='google813daf404e148806.html')),
 ]
