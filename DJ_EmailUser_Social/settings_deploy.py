@@ -189,6 +189,7 @@ COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
 GOOGLE_CLIENT_FILE_PATH = 'D:\\Projects\\django\\DJ_EmailUser_Social\\SocialGoogle\\client_secret.json'
 GOOGLE_OPTIONS = {'prompt': 'consent'}
 
+# 
 # heroku
 import django_heroku
 
