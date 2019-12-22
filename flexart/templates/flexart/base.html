@@ -31,9 +31,9 @@ S3 amazon"/>
         <link rel="stylesheet" href="{% static "flexart/css/style.css" %}" type="text/css" media="all"/>
     {% endcompress %}
 
-    {% compress css %}
+{#    {% compress css %}#}
         <!-- Font-Awesome-Icons-CSS -->
-        <link as="style" rel="preload" href="{% static "flexart/css/fontawesome-all.css" %}" type="text/css"/>
+        <link as="style" rel="preload stylesheet" href="{% static "flexart/css/fontawesome-all.css" %}" type="text/css"/>
         <!-- go to top button css-->
         <style>
             html {
@@ -62,12 +62,12 @@ S3 amazon"/>
         </style>
         <!-- /go to top button css-->
         <!-- //css files -->
-    {% endcompress %}
+{#    {% endcompress %}#}
 
 
     <!--web font-->
     {#rel="stylesheet"#}
-    <link rel="preload"
+    <link rel="preload stylesheet"
           href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=latin-ext"
           as="style"/>
     <!--//web font-->
@@ -176,8 +176,9 @@ S3 amazon"/>
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Search"
                            aria-label="Search">
-                    <button class="btn btn-sm btn-outline-info my-2 my-sm-0" type="submit"><i
-                            class="fas fa-search"></i></button>
+                    <button class="btn btn-sm btn-outline-info my-2 my-sm-0" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </form>
             </div>
         </nav>
