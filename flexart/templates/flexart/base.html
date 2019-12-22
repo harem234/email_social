@@ -27,13 +27,13 @@ S3 amazon"/>
 
     {% compress css inline %}
         <!-- Style-CSS -->
-        <link rel='stylesheet' href="{% static "flexart/css/style6.css" %}" type='text/css'/>
+        <link rel='stylesheet' href="{% static "flexart/cstyle6.css" %}" type='text/css'/>
         <link rel="stylesheet" href="{% static "flexart/css/style.css" %}" type="text/css" media="all"/>
     {% endcompress %}
 
     {% compress css %}
         <!-- Font-Awesome-Icons-CSS -->
-        <link rel="stylesheet" href="{% static "flexart/css/fontawesome-all.css" %}" type="text/css"/>
+        <link as="style" rel="preload" href="{% static "flexart/css/fontawesome-all.css" %}" type="text/css"/>
         <!-- go to top button css-->
         <style>
             html {
