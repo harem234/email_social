@@ -154,15 +154,15 @@ STATICFILES_FINDERS = (
     # django-compress
     'compressor.finders.CompressorFinder',
 )
+# whitenoise use these only if HTTPS is available
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
-# whitenoise HTTPS
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
 
 # whitenoise: Add compression and caching support
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 # whitenoise and django-compressor TODO: why??
 WHITENOISE_MAX_AGE = 31536000
@@ -173,7 +173,7 @@ WHITENOISE_ALLOW_ALL_ORIGINS = True
 # Stores only files with hashed names in STATIC_ROOT
 # WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
-# django-compress
+# django-compress #
 COMPRESS_ENABLED = True
 # django-compressor: to work with whitenoise and better deployment's performance
 COMPRESS_OFFLINE = True
