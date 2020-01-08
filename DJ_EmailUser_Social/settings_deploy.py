@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'social.apps.SocialConfig',
     'SocialGoogle.apps.SocialGoogleConfig',
-    # deployment
     # django_compressor
     'compressor',
 ]
@@ -154,10 +153,6 @@ STATICFILES_FINDERS = (
     # django-compress
     'compressor.finders.CompressorFinder',
 )
-# whitenoise use these only if HTTPS is available
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-
 
 # whitenoise: Add compression and caching support
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -189,7 +184,15 @@ COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
 GOOGLE_CLIENT_FILE_PATH = os.environ['GOOGLE_CLIENT_FILE_PATH']
 GOOGLE_OPTIONS = {'prompt': 'consent'}
 
-#
+# Security Settings
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_REDIRECT_EXEMPT = [r'^flex/index/$', ]
+SECURE_SSL_REDIRECT = True
+X_FRAME_OPTIONS = 'DENY'
+# whitenoise use these only if HTTPS is available
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 # heroku
 import django_heroku
 
