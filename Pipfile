@@ -4,9 +4,6 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-# before installing  django-compressor: pipenv run pip  install rcssmin --install-option="--without-c-extensions"
-# then pipenv update or pipenv lock
-django-compressor = "*"
 
 [packages]
 django = "==2.*"
@@ -20,6 +17,9 @@ django-heroku = "*"
 
 whitenoise = {extras = ["brotli"],version = "*"}
 
+# before installing  django-compressor: pipenv run pip  install rcssmin --install-option="--without-c-extensions"
+# then pipenv update or pipenv lock
+django-compressor = "*"
 
 # brotli = "*"
 [requires]
