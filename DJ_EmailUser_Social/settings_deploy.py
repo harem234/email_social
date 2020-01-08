@@ -187,8 +187,8 @@ GOOGLE_OPTIONS = {'prompt': 'consent'}
 # Security Settings
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_REDIRECT_EXEMPT = [r'^flex/index/$', ]
-SECURE_SSL_REDIRECT = True
+# SECURE_REDIRECT_EXEMPT = [r'^flex/index/$', ]
+# SECURE_SSL_REDIRECT = True
 X_FRAME_OPTIONS = 'DENY'
 # whitenoise use these only if HTTPS is available
 CSRF_COOKIE_SECURE = True
