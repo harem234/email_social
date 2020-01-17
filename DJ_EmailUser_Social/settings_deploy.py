@@ -87,8 +87,8 @@ AUTH_USER_MODEL = 'user.EmailUser'
 
 # # Email: Send grid
 SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
-EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
-EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
@@ -185,6 +185,7 @@ GOOGLE_CLIENT_FILE_PATH = os.environ['GOOGLE_CLIENT_FILE_PATH']
 GOOGLE_OPTIONS = {'prompt': 'consent'}
 
 # Security Settings
+
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 # SECURE_REDIRECT_EXEMPT = [r'^flex/index/$', ]
