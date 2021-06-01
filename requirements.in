@@ -1,0 +1,9 @@
+django==2.*
+
+google-auth-oauthlib
+requests
+
+gunicorn
+django-heroku
+whitenoise[brotli]
+django-compressor

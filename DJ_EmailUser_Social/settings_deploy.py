@@ -25,6 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'django-moon.herokuapp.com']
+# ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
     'SocialGoogle.apps.SocialGoogleConfig',
     # django_compressor
     'compressor',
+
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -173,15 +176,20 @@ COMPRESS_ENABLED = True
 # django-compressor: to work with whitenoise and better deployment's performance
 COMPRESS_OFFLINE = True
 
+# 
+COMPRESS_ROOT = STATIC_ROOT  
+
 # django-compress: css options
 COMPRESS_FILTERS = {
     'css': ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.rCSSMinFilter'],
     'js': ['compressor.filters.jsmin.JSMinFilter']}
-# 'compressor.storage.GzipCompressorFileStorage', 'compressor.storage.BrotliCompressorFileStorage'
-COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
+# 'compressor.storage.GzipCompressorFileStorage', 'compressor.storage.BrotliCompressorFileStorage', 'compressor.storage.CompressorFileStorage'
+COMPRESS_STORAGE = 'compressor.storage.BrotliCompressorFileStorage'
+
 
 # social google
-GOOGLE_CLIENT_FILE_PATH = os.environ['GOOGLE_CLIENT_FILE_PATH']
+# GOOGLE_CLIENT_FILE_PATH = os.environ['GOOGLE_CLIENT_FILE_PATH']
+GOOGLE_CLIENT_FILE_PATH = os.path.join(BASE_DIR, 'SocialGoogle', 'client_secret.json')
 GOOGLE_OPTIONS = {'prompt': 'consent'}
 
 # Security Settings
@@ -195,6 +203,6 @@ X_FRAME_OPTIONS = 'DENY'
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 # heroku
-import django_heroku
+# import django_heroku
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())

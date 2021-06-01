@@ -1,0 +1,6 @@
+-c requirements.txt
+django-extensions
+
+# ssl 
+pyOpenSSL
+Werkzeug
