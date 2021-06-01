@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     # django_compressor
     'compressor',
 
-    'django_extensions',
+    # 'django_extensions',
 ]
 
 MIDDLEWARE = [
