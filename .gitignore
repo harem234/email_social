@@ -108,6 +108,10 @@ venv.bak/
 # pycharm
 .idea/
 
+# vscode
+.vscode/
+.devcontainer/
+
 ### Django ###
 *.pyc
 #migrations/
@@ -116,16 +120,16 @@ venv.bak/
 #SocialGoogle/client_secret.json
 
 ### Migrations ###
-ALSTAR/migrations/*
-!ALSTAR/migrations/__init__.py
-philosophy/migrations/*
-!philosophy/migrations/__init__.py
-social/migrations/*
-!social/migrations/__init__.py
-SocialGoogle/migrations/*
-!SocialGoogle/migrations/__init__.py
-user/migrations/*
-!user/migrations/__init__.py
+# ALSTAR/migrations/*
+# !ALSTAR/migrations/__init__.py
+# philosophy/migrations/*
+# !philosophy/migrations/__init__.py
+# social/migrations/*
+# !social/migrations/__init__.py
+# SocialGoogle/migrations/*
+# !SocialGoogle/migrations/__init__.py
+# user/migrations/*
+# !user/migrations/__init__.py
 
 ### Django ###
 settings_develop.py
