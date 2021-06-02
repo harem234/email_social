@@ -203,6 +203,6 @@ X_FRAME_OPTIONS = 'DENY'
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 # heroku
-# import django_heroku
+import django_heroku
 
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
