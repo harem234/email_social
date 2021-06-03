@@ -3,7 +3,16 @@ django==2.*
 google-auth-oauthlib
 requests
 
-gunicorn
-django-heroku
 whitenoise[brotli]
 django-compressor
+
+# gevent required for celery and gunicorn
+gunicorn[gevent]
+
+# psycopg2 with Greenlet threads
+psycogreen
+django-db-geventpool
+
+# heroku
+django-heroku
+

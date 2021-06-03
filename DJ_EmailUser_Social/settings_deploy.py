@@ -99,12 +99,24 @@ EMAIL_USE_TLS = True
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+if "DATABASE_URL" in os.environ:
+    import dj_database_url
+
+    # os.environ["DATABASE_URL"] += '?' + 'MAX_CONNS=20'
+    # for django 1.6 and newer version, CONN_MAX_AGE must be set to 0, or connections will never go back to the pool
+    DATABASES = {'default': dj_database_url.config(
+        engine='django_db_geventpool.backends.postgresql_psycopg2',
+        conn_max_age=0, ssl_require=True)}
+
+    DATABASES['default']['ATOMIC_REQUESTS'] = False
+    DATABASES['default']['OPTIONS']['MAX_CONNS'] = 20
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
