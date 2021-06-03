@@ -134,6 +134,6 @@ venv.bak/
 ### Django ###
 settings_develop.py
 
-staticfiles/**
+# staticfiles/**
 
 # requirements.txt
