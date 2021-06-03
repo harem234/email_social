@@ -106,17 +106,6 @@ EMAIL_USE_TLS = True
 #     }
 # }
 
-if "DATABASE_URL" in os.environ:
-    import dj_database_url
-
-    # os.environ["DATABASE_URL"] += '?' + 'MAX_CONNS=20'
-    # for django 1.6 and newer version, CONN_MAX_AGE must be set to 0, or connections will never go back to the pool
-    DATABASES = {'default': dj_database_url.config(
-        engine='django.db.backends.postgresql_psycopg2',
-        conn_max_age=0, ssl_require=True)}
-
-    DATABASES['default']['ATOMIC_REQUESTS'] = False
-    DATABASES['default']['OPTIONS']['MAX_CONNS'] = 20
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -218,4 +207,5 @@ SESSION_COOKIE_SECURE = True
 import django_heroku
 
 # logging=False
-django_heroku.settings(locals(), databases=False, staticfiles=False,)
+# databases=False
+django_heroku.settings(locals(), staticfiles=False,)
