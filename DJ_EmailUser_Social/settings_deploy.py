@@ -217,4 +217,4 @@ SESSION_COOKIE_SECURE = True
 # heroku
 import django_heroku
 
-django_heroku.settings(locals())
+django_heroku.settings(locals(), databases=False, staticfiles=False, logging=False)

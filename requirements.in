@@ -7,11 +7,11 @@ whitenoise[brotli]
 django-compressor
 
 # gevent required for celery and gunicorn
-gunicorn[gevent]
+gunicorn
 
 # psycopg2 with Greenlet threads
-psycogreen
-django-db-geventpool
+# psycogreen
+# django-db-geventpool
 
 # heroku
 django-heroku
