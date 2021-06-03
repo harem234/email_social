@@ -112,7 +112,7 @@ if "DATABASE_URL" in os.environ:
     # os.environ["DATABASE_URL"] += '?' + 'MAX_CONNS=20'
     # for django 1.6 and newer version, CONN_MAX_AGE must be set to 0, or connections will never go back to the pool
     DATABASES = {'default': dj_database_url.config(
-        engine='django.backends.postgresql_psycopg2',
+        engine='django.db.backends.postgresql_psycopg2',
         conn_max_age=0, ssl_require=True)}
 
     DATABASES['default']['ATOMIC_REQUESTS'] = False
