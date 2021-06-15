@@ -1,0 +1,13 @@
+django==3.2.*
+
+google-auth-oauthlib
+requests
+
+whitenoise[brotli]
+
+# gevent required for celery and gunicorn
+gunicorn
+
+# heroku
+django-heroku
+

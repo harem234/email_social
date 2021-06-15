@@ -193,6 +193,9 @@ COMPRESS_STORAGE = 'compressor.storage.BrotliCompressorFileStorage'
 GOOGLE_CLIENT_FILE_PATH = os.path.join(BASE_DIR, 'SocialGoogle', 'client_secret.json')
 GOOGLE_OPTIONS = {'prompt': 'consent'}
 
+# django 3.2
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # Security Settings
 
 SECURE_BROWSER_XSS_FILTER = True
