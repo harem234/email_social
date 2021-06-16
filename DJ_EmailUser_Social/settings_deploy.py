@@ -24,7 +24,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'django-moon.herokuapp.com']
+ALLOWED_HOSTS = ['django-moon.herokuapp.com',]
 # ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'social.apps.SocialConfig',
     'SocialGoogle.apps.SocialGoogleConfig',
     # django_compressor
-    'compressor',
+    # 'compressor',
 
     # 'django_extensions',
 ]
@@ -155,7 +155,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     # django-compress
-    'compressor.finders.CompressorFinder',
+    # 'compressor.finders.CompressorFinder',
 )
 
 # whitenoise: Add compression and caching support
@@ -173,19 +173,19 @@ WHITENOISE_ALLOW_ALL_ORIGINS = True
 # WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
 # django-compress #
-COMPRESS_ENABLED = True
+# COMPRESS_ENABLED = True
 # django-compressor: to work with whitenoise and better deployment's performance
-COMPRESS_OFFLINE = True
+# COMPRESS_OFFLINE = True
 
 # 
-COMPRESS_ROOT = STATIC_ROOT  
+# COMPRESS_ROOT = STATIC_ROOT  
 
 # django-compress: css options
-COMPRESS_FILTERS = {
-    'css': ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.rCSSMinFilter'],
-    'js': ['compressor.filters.jsmin.JSMinFilter']}
+# COMPRESS_FILTERS = {
+#     'css': ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.rCSSMinFilter'],
+#     'js': ['compressor.filters.jsmin.JSMinFilter']}
 # 'compressor.storage.GzipCompressorFileStorage', 'compressor.storage.BrotliCompressorFileStorage', 'compressor.storage.CompressorFileStorage'
-COMPRESS_STORAGE = 'compressor.storage.BrotliCompressorFileStorage'
+# COMPRESS_STORAGE = 'compressor.storage.BrotliCompressorFileStorage'
 
 
 # social google

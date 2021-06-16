@@ -1,3 +1,3 @@
 release: bash ./release.bash
 
-web: gunicorn DJ_EmailUser_Social.wsgi --log-file -
+web: daphne DJ_EmailUser_Social.asgi --log-file -
