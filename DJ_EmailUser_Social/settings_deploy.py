@@ -204,6 +204,11 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # SECURE_REDIRECT_EXEMPT = [r'^flex/index/$', ]
 SECURE_SSL_REDIRECT = True
 X_FRAME_OPTIONS = 'DENY'
+
+# tell browser to use this website over https only for the next seconds, irriversible !! since we tell the browser
+# HTTP header, Strict-Transport-Security
+SECURE_HSTS_SECONDS = 60
+
 # whitenoise use these only if HTTPS is available
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
