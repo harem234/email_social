@@ -7,8 +7,7 @@
     <!-- Meta tag Keywords -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-    <meta name="keywords" content="responsive web development Django backend rest django-rest-framework herpku devOp
-S3 amazon"/>
+    <meta name="keywords" content="responsive web development Django backend"/>
     <!--// Meta tag Keywords -->
     <script>
         addEventListener("load", function () {
@@ -25,15 +24,15 @@ S3 amazon"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    {% compress css inline %}
+    {% compress css file %}
         <!-- Style-CSS -->
-        <link rel='stylesheet' href="{% static "flexart/css/style6.css" %}" type='text/css'/>
-        <link rel="stylesheet" href="{% static "flexart/css/style.css" %}" type="text/css" media="all"/>
+        <link rel='stylesheet' href="{% static 'flexart/css/style6.css' %}" type='text/css'/>
+        <link rel="stylesheet" href="{% static 'flexart/css/style.css' %}" type="text/css" media="all"/>
     {% endcompress %}
 
-{#    {% compress css %}#}
+    {% compress css inline  %}
         <!-- Font-Awesome-Icons-CSS -->
-        <link as="style" rel="preload stylesheet" href="{% static "flexart/css/fontawesome-all.css" %}" type="text/css"/>
+        <link as="style" rel="preload stylesheet" href="{% static 'flexart/css/fontawesome-all.css' %}" type="text/css"/>
         <!-- go to top button css-->
         <style>
             html {
@@ -62,7 +61,7 @@ S3 amazon"/>
         </style>
         <!-- /go to top button css-->
         <!-- //css files -->
-{#    {% endcompress %}#}
+    {% endcompress %}
 
 
     <!--web font-->
@@ -381,14 +380,14 @@ S3 amazon"/>
 {#<script src="{% static  'flexart/js/jquery-2.1.4.min.js' %}"></script>#}
 <!-- //js -->
 
-{% compress js %}
+{% compress js file modernizr_search_search %}
     <!-- search overlay -->
-    <script src="{% static "flexart/js/modernizr-2.6.2.min.js" %}"></script>
+    <script src="{% static 'flexart/js/modernizr-2.6.2.min.js' %}"></script>
     <!-- //search overlay -->
 
     <!--search jQuery-->
-    <script src="{% static "flexart/js/classie-search.js" %}"></script>
-    <script src="{% static "flexart/js/demo1-search.js" %}"></script>
+    <script src="{% static 'flexart/js/classie-search.js' %}"></script>
+    <script src="{% static 'flexart/js/demo1-search.js' %}"></script>
     <!--//search jQuery-->
 {% endcompress %}
 
@@ -398,11 +397,11 @@ S3 amazon"/>
 {% endblock %}
 
 <!-- start-smooth-scrolling -->
-{% compress js %}
-    <script src="{% static "flexart/js/SmoothScroll.min.js" %}"></script>
-    <script src="{% static "flexart/js/move-top.js" %}"></script>
-    <script src="{% static "flexart/js/easing.js" %}"></script>
-{% endcompress %}
+ {% compress js file smooth_move%} 
+    <script src="{% static 'flexart/js/SmoothScroll.min.js' %}"></script>
+    <script src="{% static 'flexart/js/move-top.js' %}"></script>
+    <script src="{% static 'flexart/js/easing.js' %}"></script>
+ {% endcompress %}
 
 {% compress js inline %}
     <script>

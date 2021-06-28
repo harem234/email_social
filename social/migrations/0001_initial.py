@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('social_id', models.CharField(max_length=1000)),
-                ('isConnected', models.BooleanField(default=False)),
+                ('is_connected', models.BooleanField(default=False)),
                 ('email', models.CharField(max_length=1000, null=True, unique=True, validators=[django.core.validators.EmailValidator])),
                 ('credentials', models.TextField(max_length=1000, null=True)),
                 ('scopes', models.TextField(max_length=1000, null=True)),

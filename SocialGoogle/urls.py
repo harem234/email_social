@@ -14,6 +14,7 @@ urlpatterns = [
     path('google/callback/add_social/', views.google_callback_add_social, name='google_callback_add_social'),
     path('google/callback/revoke/', views.google_callback_revoke, name='google_callback_revoke'),
     # end of call backs
+    
     # google_ajax_url_name: is the name of url witch be called by ajax json post request
     path('google/ajax_to_post/<str:google_ajax_url_name>/', views.TemplateCSRFView.as_view(), name='google_ajax'),
     # call from js api through ajax POST json

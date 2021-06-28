@@ -1,4 +1,5 @@
 import sys
+
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.decorators import user_passes_test, login_required
@@ -13,40 +14,63 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect
 from django.db import DatabaseError
+
+from google_auth_oauthlib.flow import Flow
+
 from social.models import SocialAccount, SocialProvider
+from social.views import create_social_create_email_user
+
+# TODO add celery priodic task to refresh google's tokens
 
 if hasattr(settings, 'GOOGLE_CLIENT_FILE_PATH'):
     GOOGLE_CLIENT_FILE_PATH = settings.GOOGLE_CLIENT_FILE_PATH
 else:
     raise ValueError('GOOGLE_CLIENT_FILE_PATH is required in settings')
 
-SCOPES = ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile', ]
+if hasattr(settings, 'GOOGLE_CLIENT_FILE_PATH'):
+    SCOPES = settings.GOOGLE_CLIENT_SCOPES
+else:
+    raise ValueError('GOOGLE_CLIENT_SCOPES is required in settings')
+
+GOOGLE_OPTIONS = None
+
+if hasattr(settings, 'GOOGLE_OPTIONS'):
+    GOOGLE_OPTIONS = settings.GOOGLE_OPTIONS
+
+GOOGLE_SOCIAL_PROVIDER_ID = SocialProvider.objects.get(social=SocialProvider.GOOGLE).id
 
 # view names that require logged in user
-REQUIRE_LOGGED_IN_URL_NAMES = ['google_callback_add_social', 'google_callback_revoke']
+# REQUIRE_LOGGED_IN_URL_NAMES: set = {'google_callback_add_social', 'google_callback_revoke',}
 
-
-# GOOGLE_OPTIONS = None
-
+next_call_isauthenticated_set: set[str] = {
+    f'google_callback_add_social:{False}', 
+    f'google_callback_revoke:{False}',
+}
 
 @require_http_methods(["GET", ])
 def google_call(request, next_call):
     """
     :param request:
     :param next_call: str
-        name of the url to get called-back by google.
+        name of the url what will be called by google.
     """
-    # view names that require logged in user
-    if next_call in REQUIRE_LOGGED_IN_URL_NAMES:
-        # view require logged in user
-        if not request.user.is_authenticated:
-            return redirect_to_login(request.path, login_url=reverse('login'))
+
+    # # view names that require logged in user
+    # if next_call in REQUIRE_LOGGED_IN_URL_NAMES:
+    #     # view require logged in user
+    #     if not request.user.is_authenticated:
+    #         return redirect_to_login(request.path, login_url=reverse('login'))
+
+    # if callback from google go to a view that require logged in user, and user is not looged in
+    # redirect user
+    if f'next_call:{not request.user.is_authenticated}' in next_call_isauthenticated_set:
+        return redirect_to_login(request.path, login_url=reverse('login'))
+
     # Use the client_secret.json file to identify the application requesting
     # authorization. The client ID (from that file) and access scopes are required.
-    import google_auth_oauthlib.flow
     flow = None
     try:
-        flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(GOOGLE_CLIENT_FILE_PATH, SCOPES, )
+        flow = Flow.from_client_secrets_file(GOOGLE_CLIENT_FILE_PATH, SCOPES, )
     except ValueError as err:
         print(err)
         return redirect('google_error')
@@ -57,8 +81,10 @@ def google_call(request, next_call):
     # you will get a 'redirect_uri_mismatch' error.
     try:
         # todo any better idea to make the url?
+        # request.build_absolute_uri(reverse('view_name', args=(obj.pk, ))) TODO test if works
         flow.redirect_uri = '%s%s' % (request.build_absolute_uri('/')[:-1], reverse(next_call))
-    except KeyError:
+    except KeyError as err:
+        print(err)
         return redirect('google_error')
 
     # Generate URL for request to Google's OAuth 2.0 server.
@@ -70,18 +96,15 @@ def google_call(request, next_call):
     # prompt='consent',
     # Enable offline access so that you can refresh an access token without
     # access_type = 'offline',
-    GOOGLE_OPTIONS = None
-    if hasattr(settings, 'GOOGLE_OPTIONS'):
-        GOOGLE_OPTIONS = settings.GOOGLE_OPTIONS
+    
     authorization_url, state = flow.authorization_url(**GOOGLE_OPTIONS)
 
     return redirect(authorization_url)
 
 
 @require_http_methods(["GET", ])
-@user_passes_test(lambda u: u.is_anonymous, login_url=reverse_lazy('google'), redirect_field_name=None)
+@user_passes_test(lambda u: u.is_anonymous, login_url=reverse_lazy('logout'), redirect_field_name='next')
 def google_callback_signup(request):
-    from social.views import create_social_create_email_user
 
     if 'access_denied' == request.GET.get('error', ''):
         return redirect('google_error')
@@ -134,12 +157,12 @@ def google_callback_login(request):
     state = request.GET.get('state', '')
     code = request.GET.get('code', '')
     redirect_uri = request.GET.get('redirect_uri', request.build_absolute_uri('?'))
-    import google_auth_oauthlib.flow
-    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+    flow = Flow.from_client_secrets_file(
         GOOGLE_CLIENT_FILE_PATH,
         SCOPES,
         state=state)
     flow.redirect_uri = redirect_uri
+
     try:
         flow.fetch_token(code=code)
     except Exception as err:
@@ -166,7 +189,7 @@ def google_callback_login(request):
 
 
 @require_http_methods(["GET", ])
-@user_passes_test(lambda u: u.is_anonymous, login_url=reverse_lazy('google'), redirect_field_name=None)
+@user_passes_test(lambda u: u.is_anonymous, login_url=reverse_lazy('logout'), redirect_field_name='next')
 def google_callback_login_signup(request):
     """
     @param request:
@@ -179,18 +202,21 @@ def google_callback_login_signup(request):
         return redirect('google_error')
 
     state = request.GET.get('state', '')
-    code = request.GET.get('code', '')
+    # code = request.GET.get('code', '')
     redirect_uri = request.GET.get('redirect_uri', request.build_absolute_uri('?'))
-    import google_auth_oauthlib.flow
-    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+    flow = Flow.from_client_secrets_file(
         GOOGLE_CLIENT_FILE_PATH,
         SCOPES,
         state=state)
     flow.redirect_uri = redirect_uri
+
+    authorization_response = request.get_raw_uri()
+
     try:
-        flow.fetch_token(code=code)
+        # flow.fetch_token(code=code)
+        flow.fetch_token(authorization_response=authorization_response)
     except Exception as err:
-        print("Exception:", err)
+        print("google fetch_token error:", err)
         return redirect('google_error')
 
     try:
@@ -202,36 +228,40 @@ def google_callback_login_signup(request):
         print('google_callback_signup: ', err)
         return redirect('google_error')
 
-    account = SocialAccount.objects.filter(social_id=userId,
-                                           provider=SocialProvider.objects.get(social=SocialProvider.GOOGLE),
-                                           site=Site.objects.get_current())
+    account = SocialAccount.objects.filter(
+        social_id=userId,
+        provider_id=GOOGLE_SOCIAL_PROVIDER_ID,
+        site_id=request.site.id).select_related('user').first()
 
-    # if the google id has an account log in the user
-    if account:
-        # there should be only one result back
-        account = account[0]
-        # LogIn the user with the social account
+    # if the google id has an account then -> log in the user
+    if account and account.user:
+         # LogIn the user with the social account
         login(request, account.user, )
         return redirect('FLEX:index', )
     else:
         try:
-            from social.views import create_social_create_email_user
-            create_social_create_email_user(userId, email, SocialProvider.objects.get(social=SocialProvider.GOOGLE),
-                                            isEmailVerified)
+            emailUser, socialAccount = create_social_create_email_user(
+                userId, 
+                email, 
+                GOOGLE_SOCIAL_PROVIDER_ID,
+                isEmailVerified, )
         except ValueError as err:
-            print('google_callback_login_signup', err)
+            print('google_callback_login_signup:', err)
             return redirect('google_error')
 
-        account = SocialAccount.objects.get(social_id=userId,
-                                            provider=SocialProvider.objects.get(social=SocialProvider.GOOGLE),
-                                            site=Site.objects.get_current())
-        login(request, account.user, )
+        # account = SocialAccount.objects.get(
+        #     social_id=userId,
+        #     provider_id=GOOGLE_SOCIAL_PROVIDER_ID,
+        #     site=Site.objects.get_current(),
+        # )
+
+        login(request, emailUser, )
 
         return redirect('FLEX:index', )
 
 
 @require_http_methods(["GET", ])
-@login_required(login_url=reverse_lazy('login'), redirect_field_name=None)
+@login_required(login_url=reverse_lazy('login'), redirect_field_name='next')
 def google_callback_add_social(request):
     if 'access_denied' == request.GET.get('error', ''):
         return redirect('google_error')
@@ -268,7 +298,7 @@ def google_callback_add_social(request):
                                                                        provider=SocialProvider.objects.get(
                                                                            social=SocialProvider.GOOGLE),
                                                                        defaults={
-                                                                           'social_id': social_id, 'isConnected': True,
+                                                                           'social_id': social_id, 'is_connected': True,
                                                                            'email': email, })
 
     except DatabaseError:
@@ -442,7 +472,7 @@ class GoogleAjaxAddSocialView(AjaxGoogleAuthorizeMixin, View):
                                                                                    social=SocialProvider.GOOGLE),
                                                                                defaults={
                                                                                    'social_id': userId,
-                                                                                   'isConnected': True,
+                                                                                   'is_connected': True,
                                                                                    'email': email, })
             except DatabaseError as err:
                 # database error

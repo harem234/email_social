@@ -1,7 +1,9 @@
 from django.contrib.sites.models import Site
 from django.db import transaction
 from django.contrib.auth import get_user_model
-from social.models import SocialAccount, SocialProvider
+from social.models import SocialAccount
+
+USER_MODEL = get_user_model()
 
 """
     create social account
@@ -16,28 +18,44 @@ from social.models import SocialAccount, SocialProvider
 
 
 @transaction.atomic
-def create_social_create_email_user(social_id, email, provider, is_email_verified=False, ):
-    emailUser, isCreated = get_user_model().objects.get_or_create(email=email,
-                                                                  defaults={'site': Site.objects.get_current(),
-                                                                            'isEmailVerified': is_email_verified}, )
+def create_social_create_email_user(social_id, email, provider_id, is_email_verified=False, ):
+    """
+    if user exists just add the social
+    if user does not exists, create user and add social
 
-    if not isCreated:
-        # raise and the transaction rollback
-        raise ValueError("EmailUser already exist PK: %d" % emailUser.pk)
+    """
+    emailUser, isCreated = USER_MODEL.objects.get_or_create(
+        email=email,
+        defaults={'site': Site.objects.get_current(),
+                  'isEmailVerified': is_email_verified}, )
 
-    socialAccount, isCreated = SocialAccount.objects.get_or_create(site=Site.objects.get_current(),
-                                                                   user=get_user_model().objects.get(email=email),
-                                                                   provider=provider,
-                                                                   defaults={
-                                                                       'social_id': social_id, 'isConnected': True,
-                                                                       'email': email, })
+    # if not isCreated:
+    #     # raise and the transaction rollback
+    #     raise ValueError("EmailUser already exist PK: %d" % emailUser.pk)
 
-    if not isCreated:
-        # raise and the transaction rollback
-        raise ValueError("SocialAccount already exist PK: %d" % socialAccount.pk)
+    socialAccount, isCreated = SocialAccount.objects.get_or_create(
+        site=Site.objects.get_current(),
+        user=emailUser,
+        provider_id=provider_id,
+        defaults={
+            'social_id': social_id,
+            'is_connected': True,
+            'email': email, })
+
+    # if not isCreated:
+    #     # raise and the transaction rollback
+    #     raise ValueError("SocialAccount already exist PK: %d" % socialAccount.pk)
+
+    return (emailUser, socialAccount,)
 
 
 @transaction.atomic
-def create_social_for_user(user, social_id, **kwargs):
-    SocialAccount.objects.create(site=Site.objects.get_current(), user=user, provider=SocialProvider.objects.get(
-        social='google'), social_id=social_id, isConnected=True, email=kwargs.get('email'), )
+def create_social_for_user(user, social_id, provider_id, site=None, **kwargs):
+    return SocialAccount.objects.create(
+        site=site or Site.objects.get_current(),
+        user=user, provider_id=provider_id,
+        social_id=social_id,
+        is_connected=True,
+        email=kwargs.get('email'),
+        kwargs=kwargs
+        )

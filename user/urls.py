@@ -2,7 +2,7 @@ from django.urls import path, reverse_lazy
 from django.contrib.auth import views as auth_view
 from django.views.generic import TemplateView
 
-from .views import PostLogoutView, CustomPasswordChangeView
+from .views import PostLogoutView, CustomPasswordChangeView, user_detail_view
 
 urlpatterns = [
     path('login/',
@@ -26,4 +26,6 @@ urlpatterns = [
     path('reset/done/',
          auth_view.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'),
          name='password_reset_complete'),
+
+     path('users/<int:pk>/', user_detail_view, name='user_detail'),
 ]
