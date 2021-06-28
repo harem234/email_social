@@ -1,0 +1,19 @@
+django==3.2.*
+
+google-auth-oauthlib
+requests
+
+whitenoise[brotli]
+
+django-compressor
+
+# gevent required for celery and gunicorn
+gunicorn
+
+# async 
+#daphne
+#Twisted[tls , http2]
+
+# heroku
+django-heroku
+

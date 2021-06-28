@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     # apps
     'flexart.apps.FlexartConfig',
     'ALSTAR.apps.AlstarConfig',
@@ -46,7 +47,7 @@ INSTALLED_APPS = [
     # django_compressor
     'compressor',
 
-    # 'django_extensions',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -99,12 +100,12 @@ EMAIL_USE_TLS = True
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 
 # Password validation
@@ -146,7 +147,7 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-# # Extra places for collectstatic to find static files.
+# Extra places for collectstatic to find static files.
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, 'static'),
 # )
@@ -170,42 +171,58 @@ WHITENOISE_MAX_AGE = 31536000
 WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 # Stores only files with hashed names in STATIC_ROOT
-# WHITENOISE_KEEP_ONLY_HASHED_FILES = True
+WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
 # django-compress #
 COMPRESS_ENABLED = True
 # django-compressor: to work with whitenoise and better deployment's performance
 COMPRESS_OFFLINE = True
 
-# 
-COMPRESS_ROOT = STATIC_ROOT  
+# where django-compress stores static files make from templates
+# os.path.join(BASE_DIR, 'static')  
+COMPRESS_ROOT = STATIC_ROOT
 
 # django-compress: css options
-COMPRESS_FILTERS = {
-    'css': ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.rCSSMinFilter'],
-    'js': ['compressor.filters.jsmin.JSMinFilter']}
+# COMPRESS_FILTERS = {
+#     'css': ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.rCSSMinFilter'],
+#     'js': ['compressor.filters.jsmin.JSMinFilter']}
 # 'compressor.storage.GzipCompressorFileStorage', 'compressor.storage.BrotliCompressorFileStorage', 'compressor.storage.CompressorFileStorage'
 COMPRESS_STORAGE = 'compressor.storage.BrotliCompressorFileStorage'
 
 
 # social google
 # GOOGLE_CLIENT_FILE_PATH = os.environ['GOOGLE_CLIENT_FILE_PATH']
-GOOGLE_CLIENT_FILE_PATH = os.path.join(BASE_DIR, 'SocialGoogle', 'client_secret.json')
-GOOGLE_OPTIONS = {'prompt': 'consent'}
+GOOGLE_CLIENT_FILE_PATH = os.path.join(BASE_DIR, 'SocialGoogle', 'client_secret_104908188398-lovsjp717e2brlaqkao3tjc3kjpkn4o4.apps.googleusercontent.com.json')
+# 'https://www.googleapis.com/auth/userinfo.email' , 'https://www.googleapis.com/auth/userinfo.profile',
+GOOGLE_CLIENT_SCOPES = ('https://www.googleapis.com/auth/userinfo.email', )
+
+# Enable incremental authorization. Recommended as a best practice.
+
+GOOGLE_OPTIONS = {
+    'prompt': 'consent',
+    'access_type': 'offline',
+    'include_granted_scopes': 'true',
+    }
+
+    
 
 # Security Settings
 
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-# SECURE_REDIRECT_EXEMPT = [r'^flex/index/$', ]
-SECURE_SSL_REDIRECT = True
-X_FRAME_OPTIONS = 'DENY'
-# whitenoise use these only if HTTPS is available
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-# heroku
-import django_heroku
+# SECURE_BROWSER_XSS_FILTER = True
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+# # SECURE_REDIRECT_EXEMPT = [r'^flex/index/$', ]
+# SECURE_SSL_REDIRECT = True
+# X_FRAME_OPTIONS = 'DENY'
+# # whitenoise use these only if HTTPS is available
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
 
-# logging=False
-# databases=False
-django_heroku.settings(locals(), staticfiles=False,)
+# django 3.2
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# # heroku
+# import django_heroku
+
+# # logging=False
+# # databases=False
+# django_heroku.settings(locals(), staticfiles=False,)

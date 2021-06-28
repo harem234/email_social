@@ -1,4 +1,4 @@
-django==2.*
+django==3.2.*
 
 google-auth-oauthlib
 requests
@@ -8,6 +8,10 @@ django-compressor
 
 # gevent required for celery and gunicorn
 gunicorn
+
+# async 
+daphne
+Twisted[tls , http2]
 
 # psycopg2 with Greenlet threads
 # psycogreen

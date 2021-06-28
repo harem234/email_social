@@ -5,6 +5,10 @@ from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views
+from django.shortcuts import render, get_object_or_404, redirect
+
+from user.models import EmailUser
+
 from .forms import CustomUserCreationForm
 
 
@@ -45,3 +49,9 @@ class CustomPasswordChangeView(PasswordChangeView):
 @method_decorator(login_required(login_url=reverse_lazy('login')), name='dispatch', )
 class CustomPasswordChangeDoneView(PasswordChangeDoneView):
     template_name = 'registration/password_change_done.html'
+
+
+def user_detail_view(request, pk):
+  return render(request, 'user_detail.html', {
+    'user': get_object_or_404(EmailUser, pk=pk)
+  })

@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from django.contrib.sitemaps.views import sitemap
+
+from user.UserSitemap import UserSitemap
+
+sitemaps = {
+    'user': UserSitemap,
+}
 
 urlpatterns = [
     path('flex/', include('flexart.urls')),
@@ -24,5 +31,7 @@ urlpatterns = [
     path('accounts/', include('user.urls')),
     path('', include('SocialGoogle.urls')),
     path('admin/', admin.site.urls),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+     name='django.contrib.sitemaps.views.sitemap'),
     path('google813daf404e148806.html', TemplateView.as_view(template_name='google813daf404e148806.html')),
 ]
