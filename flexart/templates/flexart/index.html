@@ -1,13 +1,13 @@
 {% extends "flexart/base.html" %}
 {% load static %}
-{% load compress %}
+{#{% load compress %}#}
 
 {% block headcontent %}
-    {% compress css inline %}
+{#    {% compress css inline %}#}
         <!-- banner slider css -->
         <link href="{% static "flexart/css/minimal-slider.css" %}" rel='stylesheet' type='text/css'/>
         <!-- //banner slider css -->
-    {% endcompress %}
+{#    {% endcompress %}#}
 
     <!-- icon in the tab -->
     <link rel="shortcut icon" type="image/png" href="{% static "flexart/icon/tram-solid.svg" %}">
@@ -406,7 +406,7 @@
 {% endblock content %}
 
 {% block footer_script %}
-    {% compress js file slider %}
+{#    {% compress js file slider %}#}
         <!-- banner slider js -->
         <script src="{% static "flexart/js/minimal-slider.js" %}"></script>
         <!-- //banner slider js -->
@@ -414,9 +414,9 @@
         <!-- Stats-Number-Scroller-Animation-JavaScript -->
         <script src="{% static "flexart/js/waypoints.min.js" %}"></script>
         <script src="{% static "flexart/js/counterup.min.js" %}"></script>
-    {% endcompress %}
+{#    {% endcompress %}#}
 
-    {% compress js inline %}
+{#    {% compress js inline %}#}
         <script>
             jQuery(document).ready(function ($) {
                 $('.counter').counterUp({
@@ -425,7 +425,7 @@
                 });
             });
         </script>
-    {% endcompress %}
+{#    {% endcompress %}#}
     <!-- //Stats-Number-Scroller-Animation-JavaScript -->
 {% endblock %}
 

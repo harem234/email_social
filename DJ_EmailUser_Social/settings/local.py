@@ -24,7 +24,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['django-moon.herokuapp.com',]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'django-moon.herokuapp.com']
 # ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -99,13 +100,12 @@ EMAIL_USE_TLS = True
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -163,8 +163,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
-# whitenoise and django-compressor TODO: why??
-WHITENOISE_MAX_AGE = 31536000
+# max age for browser to keep a static file
+WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
 
 # allow cross origin request for public static files
 WHITENOISE_ALLOW_ALL_ORIGINS = True
@@ -172,30 +172,31 @@ WHITENOISE_ALLOW_ALL_ORIGINS = True
 # Stores only files with hashed names in STATIC_ROOT
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
-# django-compress 
+# django-compress #
 COMPRESS_ENABLED = True
+
 # django-compressor: to work with whitenoise and better deployment's performance
 COMPRESS_OFFLINE = True
 
-
+# 
 COMPRESS_ROOT = STATIC_ROOT  
 
-# django-compress: css options
+# django-compress: css, js options
 COMPRESS_FILTERS = {
     'css': ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.rCSSMinFilter'],
     'js': ['compressor.filters.jsmin.JSMinFilter']}
 
+# tip for offline compressor, change it once to GzipCompressorFileStorage and use manage.py compress 
+# then use BrotliCompressorFileStorage and use manage.py compress,
+# to have both .br .gz files
 # 'compressor.storage.GzipCompressorFileStorage', 'compressor.storage.BrotliCompressorFileStorage', 'compressor.storage.CompressorFileStorage'
 COMPRESS_STORAGE = 'compressor.storage.BrotliCompressorFileStorage'
 
 
 # social google
 # GOOGLE_CLIENT_FILE_PATH = os.environ['GOOGLE_CLIENT_FILE_PATH']
-GOOGLE_CLIENT_FILE_PATH = os.path.join(BASE_DIR, 'SocialGoogle', 'client_secret.json')
+GOOGLE_CLIENT_FILE_PATH = os.path.join(BASE_DIR, 'SocialGoogle', 'client_secret_104908188398-lovsjp717e2brlaqkao3tjc3kjpkn4o4.apps.googleusercontent.com.json')
 GOOGLE_OPTIONS = {'prompt': 'consent'}
-
-# django 3.2
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Security Settings
 
@@ -204,17 +205,10 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # SECURE_REDIRECT_EXEMPT = [r'^flex/index/$', ]
 SECURE_SSL_REDIRECT = True
 X_FRAME_OPTIONS = 'DENY'
-
-# tell browser to use this website over https only for the next seconds, irriversible !! since we tell the browser
-# HTTP header, Strict-Transport-Security
-SECURE_HSTS_SECONDS = 60
-
 # whitenoise use these only if HTTPS is available
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 # heroku
 import django_heroku
 
-# logging=False
-# databases=False
-django_heroku.settings(locals(), staticfiles=False,)
+django_heroku.settings(locals())

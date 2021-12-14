@@ -1,13 +1,13 @@
 {% extends "flexart/base.html" %}
 {% load static %}
-{% load compress %}
+{#{% load compress %}#}
 {% block headcontent %}
-    {% compress css %}
+{#    {% compress css %}#}
         <!-- Testimonials-slider-css-files -->
         <link rel="stylesheet" href="{% static 'flexart/css/owl.carousel.css' %}" type="text/css" media="all">
         <link rel="stylesheet" href="{% static 'flexart/css/owl.theme.css' %}">
         <!-- //Testimonials-slider-css-files -->
-    {% endcompress %}
+{#    {% endcompress %}#}
 {% endblock %}
 
 {% block content %}
@@ -252,7 +252,7 @@
 {% endblock %}
 
 {% block footer_script %}
-    {% compress js %}
+{#    {% compress js %}#}
         <!-- for testimonials slider-js-file-->
         <script src="{% static "flexart/js/owl.carousel.js" %}"></script>
         <!-- //for testimonials slider-js-file-->
@@ -270,6 +270,6 @@
             });
         </script>
         <!-- //for testimonials slider-js-script-->
-    {% endcompress %}
+{#    {% endcompress %}#}
 {% endblock footer_script %}
 

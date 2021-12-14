@@ -1,13 +1,13 @@
 {% extends "flexart/base.html" %}
 {% load static %}
-{% load compress %}
+{#{% load compress %}#}
 
 {% block headcontent %}
-    {% compress css %}
+{#    {% compress css %}#}
         <!-- banner slider css -->
         <link href="{% static "flexart/css/minimal-slider.css" %}" rel='stylesheet' type='text/css'/>
         <!-- //banner slider css -->
-    {% endcompress %}
+{#    {% endcompress %}#}
 {% endblock %}
 
 {% block content %}
@@ -557,7 +557,7 @@
     </script>
     <!-- //popup register modal -->
 
-    {% compress js %}
+{#    {% compress js %}#}
         <!-- banner slider js -->
         <script src="{% static "flexart/js/minimal-slider.js" %}"></script>
         <!-- //banner slider js -->
@@ -565,7 +565,7 @@
         <!-- Stats-Number-Scroller-Animation-JavaScript -->
         <script src="{% static "flexart/js/waypoints.min.js" %}"></script>
         <script src="{% static "flexart/js/counterup.min.js" %}"></script>
-    {% endcompress %}
+{#    {% endcompress %}#}
     <script>
         jQuery(document).ready(function ($) {
             $('.counter').counterUp({

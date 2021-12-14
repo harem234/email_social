@@ -1,10 +1,10 @@
-django==2.*
+django==3.*
 
 google-auth-oauthlib
 requests
 
 whitenoise[brotli]
-django-compressor
+
 
 # gevent required for celery and gunicorn
 gunicorn

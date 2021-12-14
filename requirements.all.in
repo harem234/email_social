@@ -5,11 +5,25 @@ requests
 
 whitenoise[brotli]
 
+# comoress and compile static files
+# django_compressor
+
 # gevent required for celery and gunicorn
 gunicorn
 
+# psycopg2 with Greenlet threads
+# psycogreen
+# django-db-geventpool
+
 # heroku
 django-heroku
+
+# development
+django-extensions
+
+# ssl, run python locally with HTTPS
+pyOpenSSL
+Werkzeug
 
 # production server
 daphne

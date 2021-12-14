@@ -1,5 +1,5 @@
 {% load static %}
-{% load compress %}
+{#  {% load compress %} #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,12 +24,11 @@ S3 amazon"/>
     {#    <link rel="stylesheet" href="{% static "flexart/css/bootstrap.css" %}"> <!-- Bootstrap-Core-CSS -->#}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    {% compress css inline %}
+{#    {% compress css inline %}#}
         <!-- Style-CSS -->
         <link rel='stylesheet' href="{% static "flexart/css/style6.css" %}" type='text/css'/>
         <link rel="stylesheet" href="{% static "flexart/css/style.css" %}" type="text/css" media="all"/>
-    {% endcompress %}
+{#    {% endcompress %}#}
 
 {#    {% compress css %}#}
         <!-- Font-Awesome-Icons-CSS -->
@@ -381,7 +380,7 @@ S3 amazon"/>
 {#<script src="{% static  'flexart/js/jquery-2.1.4.min.js' %}"></script>#}
 <!-- //js -->
 
-{% compress js %}
+{#{% compress js %}#}
     <!-- search overlay -->
     <script src="{% static "flexart/js/modernizr-2.6.2.min.js" %}"></script>
     <!-- //search overlay -->
@@ -390,7 +389,7 @@ S3 amazon"/>
     <script src="{% static "flexart/js/classie-search.js" %}"></script>
     <script src="{% static "flexart/js/demo1-search.js" %}"></script>
     <!--//search jQuery-->
-{% endcompress %}
+{#{% endcompress %}#}
 
 
 {% block footer_script %}
@@ -398,13 +397,13 @@ S3 amazon"/>
 {% endblock %}
 
 <!-- start-smooth-scrolling -->
-{% compress js %}
-    <script src="{% static "flexart/js/SmoothScroll.min.js" %}"></script>
-    <script src="{% static "flexart/js/move-top.js" %}"></script>
-    <script src="{% static "flexart/js/easing.js" %}"></script>
-{% endcompress %}
+{#{% compress js %}#}
+    <script src="{% static 'flexart/js/SmoothScroll.min.js' %}"></script>
+    <script src="{% static 'flexart/js/move-top.js' %}"></script>
+    <script src="{% static 'flexart/js/easing.js' %}"></script>
+{#{% endcompress %}#}
 
-{% compress js inline %}
+{#{% compress js inline %}#}
     <script>
         jQuery(document).ready(function ($) {
             $(".scroll").click(function (event) {
@@ -496,7 +495,7 @@ S3 amazon"/>
         }
     </script>
     <!-- /go to top button js-->
-{% endcompress %}
+{#{% endcompress %}#}
 
 
 </body>
