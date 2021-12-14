@@ -132,7 +132,7 @@ venv.bak/
 # !user/migrations/__init__.py
 
 ### Django ###
-settings_develop.py
+settings/local.py
 
 # staticfiles/**
 
