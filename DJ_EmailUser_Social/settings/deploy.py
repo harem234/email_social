@@ -1,4 +1,5 @@
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -12,8 +13,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['django-moon.herokuapp.com',]
-
+# ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'django-moon.herokuapp.com']
 # development
 ALLOWED_HOSTS = ['*']
 
@@ -38,6 +38,8 @@ INSTALLED_APPS = [
 
     # development
     # 'django_extensions',
+
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -96,6 +98,9 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -163,6 +168,9 @@ WHITENOISE_ALLOW_ALL_ORIGINS = True
 # Stores only files with hashed names in STATIC_ROOT
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
+# Media URL
+MEDIA_URL = '/media/'
+
 # django-compress
 
 
@@ -196,18 +204,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
-# SECURE_REDIRECT_EXEMPT = [r'^flex/index/$', ]
-SECURE_SSL_REDIRECT = True
 X_FRAME_OPTIONS = 'DENY'
 
-# tell browser to use this website over https only for the next seconds,
-# after browser see his header in response it is irreversible by the server!! since we (server!) tell the browser to do 
-# HTTP header, Strict-Transport-Security
-SECURE_HSTS_SECONDS = 20
+# tell browser to redirect to https rather than http!
+# SECURE_SSL_REDIRECT = True
 
-# whitenoise use these only if HTTPS is available
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+# do not redirect URLS in regex format to https if SECURE_SSL_REDIRECT is True
+# SECURE_REDIRECT_EXEMPT = [r'^flex/index/$', ]
+
+# # tell browser to use this website over https only for the next seconds,
+# # after browser see his header in response it is irreversible by the server!! since we (server!) tell the browser to do
+# # HTTP header, Strict-Transport-Security
+# SECURE_HSTS_SECONDS = 3
+#
+# # whitenoise use these only if HTTPS is available
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
 
 # # heroku
 # import django_heroku

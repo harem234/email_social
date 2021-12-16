@@ -8,8 +8,8 @@ whitenoise[brotli]
 # gevent required for celery and gunicorn
 gunicorn
 
-# heroku
-django-heroku
+# heroku, deprecated
+# django-heroku
 
 # production server
 daphne
@@ -17,3 +17,10 @@ daphne
 # daphne http2 and tsl and https
 Twisted[tls,http2]
 pyopenssl
+
+#
+dj-database-url
+psycopg2
+
+# security check of packages
+pip-audit
