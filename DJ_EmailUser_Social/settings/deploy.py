@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     # development
     # 'django_extensions',
 
-    # 'whitenoise.runserver_nostatic',
+    'whitenoise',
 ]
 
 MIDDLEWARE = [
@@ -167,7 +167,7 @@ WHITENOISE_MAX_AGE = 31536000
 WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 # Stores only files with hashed names in STATIC_ROOT
-WHITENOISE_KEEP_ONLY_HASHED_FILES = True
+# WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
 # Media URL
 MEDIA_URL = '/media/'
