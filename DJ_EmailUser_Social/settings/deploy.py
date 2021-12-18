@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     # development
     # 'django_extensions',
 
-    'whitenoise.runserver_nostatic',
+    # 'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
