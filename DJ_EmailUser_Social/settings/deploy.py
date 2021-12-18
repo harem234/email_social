@@ -4,7 +4,6 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-print('BASE_DIR:', BASE_DIR)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -35,6 +34,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'social.apps.SocialConfig',
     'SocialGoogle.apps.SocialGoogleConfig',
+
     # django_compressor
     # 'compressor',
 
@@ -97,13 +97,13 @@ EMAIL_USE_TLS = True
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -209,7 +209,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
 
 # tell browser to redirect to https rather than http!
-# SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True
 
 # do not redirect URLS in regex format to https if SECURE_SSL_REDIRECT is True
 # SECURE_REDIRECT_EXEMPT = [r'^flex/index/$', ]
@@ -217,11 +217,14 @@ X_FRAME_OPTIONS = 'DENY'
 # # tell browser to use this website over https only for the next seconds,
 # # after browser see his header in response it is irreversible by the server!! since we (server!) tell the browser to do
 # # HTTP header, Strict-Transport-Security
-# SECURE_HSTS_SECONDS = 3
+SECURE_HSTS_SECONDS = 3
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+SECURE_HSTS_PRELOAD = True
 #
 # # whitenoise use these only if HTTPS is available
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 # # heroku
 # import django_heroku
