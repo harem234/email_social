@@ -209,7 +209,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
 
 # tell browser to redirect to https rather than http!
-SECURE_SSL_REDIRECT = True
+# SECURE_SSL_REDIRECT = True
 
 # do not redirect URLS in regex format to https if SECURE_SSL_REDIRECT is True
 # SECURE_REDIRECT_EXEMPT = [r'^flex/index/$', ]
@@ -217,15 +217,16 @@ SECURE_SSL_REDIRECT = True
 # # tell browser to use this website over https only for the next seconds,
 # # after browser see his header in response it is irreversible by the server!! since we (server!) tell the browser to do
 # # HTTP header, Strict-Transport-Security
-SECURE_HSTS_SECONDS = 3
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-
-SECURE_HSTS_PRELOAD = True
+# SECURE_HSTS_SECONDS = 3
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#
+# SECURE_HSTS_PRELOAD = True
 #
 # # whitenoise use these only if HTTPS is available
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
+DISABLE_SERVER_SIDE_CURSORS = True  # required when using pgbouncer's pool_mode=transaction
 # # heroku
 # import django_heroku
 #
