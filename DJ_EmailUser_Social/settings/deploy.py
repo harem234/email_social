@@ -147,6 +147,7 @@ STATIC_URL = '/static/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+
     # django-compress
     # 'compressor.finders.CompressorFinder',
 )
@@ -168,7 +169,7 @@ WHITENOISE_MAX_AGE = 31536000
 WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 # Stores only files with hashed names in STATIC_ROOT
-# WHITENOISE_KEEP_ONLY_HASHED_FILES = True
+WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
 # Media URL
 MEDIA_URL = '/media/'
@@ -223,10 +224,12 @@ X_FRAME_OPTIONS = 'DENY'
 # SECURE_HSTS_PRELOAD = True
 #
 # # whitenoise use these only if HTTPS is available
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
 
-DISABLE_SERVER_SIDE_CURSORS = True  # required when using pgbouncer's pool_mode=transaction
+# required when using pgbouncer's pool_mode=transaction
+DISABLE_SERVER_SIDE_CURSORS = True
+
 # # heroku
 # import django_heroku
 #
