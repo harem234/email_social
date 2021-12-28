@@ -96,15 +96,14 @@ EMAIL_USE_TLS = True
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
+    'default': {
+        #     'ENGINE': 'django.db.backends.sqlite3',
+        #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -197,7 +196,8 @@ MEDIA_URL = '/media/'
 
 # social google
 # GOOGLE_CLIENT_FILE_PATH = os.environ['GOOGLE_CLIENT_FILE_PATH']
-GOOGLE_CLIENT_FILE_PATH = os.path.join(BASE_DIR, 'SocialGoogle', 'client_secret_104908188398-lovsjp717e2brlaqkao3tjc3kjpkn4o4.apps.googleusercontent.com.json')
+GOOGLE_CLIENT_FILE_PATH = os.path.join(BASE_DIR, 'SocialGoogle',
+                                       'client_secret_104908188398-lovsjp717e2brlaqkao3tjc3kjpkn4o4.apps.googleusercontent.com.json')
 GOOGLE_OPTIONS = {'prompt': 'consent'}
 
 # django 3.2
