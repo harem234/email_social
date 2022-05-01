@@ -2,8 +2,10 @@
 *.pyo
 *.sql.gz
 .idea/
+.vscode/
+.devcontainer/
 .git/
 .vagrant/
 __pycache__
-DJ_EmailUser_Social/settings/local.py
+# DJ_EmailUser_Social/settings/local.py
 Dockerfile
