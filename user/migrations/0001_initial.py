@@ -5,7 +5,7 @@ from django.db import migrations, models
 import django.db.models.deletion
 import django.utils.timezone
 
-
+# squash name 0001_initial_squashed_0003_auto_20211215_1255
 class Migration(migrations.Migration):
     # replaces = [('user', '0001_initial'), ('user', '0002_auto_20191218_1301'), ('user', '0003_auto_20211215_1255')]
 
