@@ -7,7 +7,7 @@ import user.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user', '0001_initial_squashed_0003_auto_20211215_1255'),
+        ('user', '0002_auto_20191218_1301'),
     ]
 
     operations = [
