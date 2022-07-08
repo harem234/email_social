@@ -14,5 +14,5 @@ gunicorn
 # django-db-geventpool
 
 # heroku
-django-heroku
+# django-heroku
 

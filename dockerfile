@@ -8,5 +8,7 @@ ENV PYTHONUNBUFFERED 1
 COPY . /opt/email_user_prj
 
 RUN pip install --upgrade pip pip-tools; \
-    pip install -r ;
-RUN pip install -r requirements.txt 
+    python3 -m venv ~/envs/prj_env; \
+    source ~/envs/prj_env/bin/activate; \
+    pip-tools requirements.all.in; \
+    pip install -r requirements.all.in;

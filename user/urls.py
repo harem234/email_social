@@ -2,7 +2,7 @@ from django.urls import path, reverse_lazy
 from django.contrib.auth import views as auth_view
 from django.views.generic import TemplateView
 
-from .views import PostLogoutView, CustomPasswordChangeView
+from .views import PostLogoutView, CustomPasswordChangeView, VerifyEmailView
 
 urlpatterns = [
     path('login/',
@@ -26,4 +26,21 @@ urlpatterns = [
     path('reset/done/',
          auth_view.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'),
          name='password_reset_complete'),
+
+    # request verify email
+    path(
+        'email/request-verify-email-page/',
+        TemplateView.as_view(template_name='registration/request_verify_email.html'),
+        name='request_verify_email_page',
+    ),
+
+    path(
+        'email/request-verify-email/',
+        VerifyEmailView.as_view(),
+        name='email_request_verify'),
+
+    path(
+        'email/verify-email/<uidb64>/<token>/',
+        VerifyEmailView.as_view(),
+        name='email_verify'),
 ]

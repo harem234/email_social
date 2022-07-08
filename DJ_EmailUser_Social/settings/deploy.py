@@ -11,9 +11,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'django-moon.herokuapp.com']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'django-moon.herokuapp.com', ]
 
 # development
 # ALLOWED_HOSTS = ['*']
@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     # apps
     'flexart.apps.FlexartConfig',
     'ALSTAR.apps.AlstarConfig',
@@ -196,8 +197,11 @@ MEDIA_URL = '/media/'
 
 # social google
 # GOOGLE_CLIENT_FILE_PATH = os.environ['GOOGLE_CLIENT_FILE_PATH']
-GOOGLE_CLIENT_FILE_PATH = os.path.join(BASE_DIR, 'SocialGoogle',
-                                       'client_secret_104908188398-lovsjp717e2brlaqkao3tjc3kjpkn4o4.apps.googleusercontent.com.json')
+GOOGLE_CLIENT_FILE_PATH = os.path.join(
+    BASE_DIR, 'SocialGoogle',
+    'client_secret_104908188398-lovsjp717e2brlaqkao3tjc3kjpkn4o4.apps.googleusercontent.com.json',
+)
+
 GOOGLE_OPTIONS = {'prompt': 'consent'}
 
 # django 3.2
@@ -215,14 +219,16 @@ X_FRAME_OPTIONS = 'DENY'
 # do not redirect URLS in regex format to https if SECURE_SSL_REDIRECT is True
 # SECURE_REDIRECT_EXEMPT = [r'^flex/index/$', ]
 
-# # tell browser to use this website over https only for the next seconds,
-# # after browser see his header in response it is irreversible by the server!! since we (server!) tell the browser to do
-# # HTTP header, Strict-Transport-Security
+"""
+tell browser to use this website over https only for the number of next seconds,
+after browser see the header in response it is irreversible by the server!! since we (server!) tell the browser to do so
+HTTP header is: Strict-Transport-Security max-age=<expire-time in seconds>
+"""
 # SECURE_HSTS_SECONDS = 3
+
 # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-#
 # SECURE_HSTS_PRELOAD = True
-#
+
 # # whitenoise use these only if HTTPS is available
 # CSRF_COOKIE_SECURE = True
 # SESSION_COOKIE_SECURE = True
@@ -231,8 +237,14 @@ X_FRAME_OPTIONS = 'DENY'
 DISABLE_SERVER_SIDE_CURSORS = True
 
 # # heroku
+
+
 # import django_heroku
 #
 # # logging=False
 # # databases=False
 # django_heroku.settings(locals(), staticfiles=False,)
+
+
+# # END heroku
+

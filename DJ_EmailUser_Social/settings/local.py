@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'django-moon.herokuapp.com']
 # ALLOWED_HOSTS = ['*']
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     # apps
     'flexart.apps.FlexartConfig',
     'ALSTAR.apps.AlstarConfig',
@@ -43,10 +44,13 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'social.apps.SocialConfig',
     'SocialGoogle.apps.SocialGoogleConfig',
-    # django_compressor
-    'compressor',
 
-    # 'django_extensions',
+    # django_compressor
+    # 'compressor',
+
+    'django_extensions',
+
+    'whitenoise',
 ]
 
 MIDDLEWARE = [
@@ -85,17 +89,19 @@ WSGI_APPLICATION = 'DJ_EmailUser_Social.wsgi.application'
 # Custom user model
 AUTH_USER_MODEL = 'user.EmailUser'
 
+DEFAULT_FROM_EMAIL = 'webmaster@localhost.lo'
+
 # email backend
-# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-# EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'DJ_EmailUser_Social', "temp", "sent_emails")
 
 # # Email: Send grid
-SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+# SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
+# EMAIL_HOST_USER = 'apikey'
+# EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -109,6 +115,8 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
+
+PASSWORD_RESET_TIMEOUT_DAYS = 2
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -128,6 +136,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # django.contrib.sites
 SITE_ID = 1
 
+# set default primary key since django 3.2
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# shows DEBUG value of this setting in template {{ debug }}
+INTERNAL_IPS = (
+    '127.0.0.1',
+)
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -146,16 +162,17 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-# # Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+
     # django-compress
-    'compressor.finders.CompressorFinder',
+    # 'compressor.finders.CompressorFinder',
 )
 
 # whitenoise: Add compression and caching support
@@ -166,49 +183,77 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # max age for browser to keep a static file
 WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
 
-# allow cross origin request for public static files
+# allow cross-origin request for public static files
 WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 # Stores only files with hashed names in STATIC_ROOT
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
 # django-compress #
-COMPRESS_ENABLED = True
+
+
+# COMPRESS_ENABLED = True
 
 # django-compressor: to work with whitenoise and better deployment's performance
-COMPRESS_OFFLINE = True
+# COMPRESS_OFFLINE = True
 
 # 
-COMPRESS_ROOT = STATIC_ROOT  
+# COMPRESS_ROOT = STATIC_ROOT
 
 # django-compress: css, js options
-COMPRESS_FILTERS = {
-    'css': ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.rCSSMinFilter'],
-    'js': ['compressor.filters.jsmin.JSMinFilter']}
+# COMPRESS_FILTERS = {
+#     'css': ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.rCSSMinFilter'],
+#     'js': ['compressor.filters.jsmin.JSMinFilter']}
 
 # tip for offline compressor, change it once to GzipCompressorFileStorage and use manage.py compress 
 # then use BrotliCompressorFileStorage and use manage.py compress,
 # to have both .br .gz files
 # 'compressor.storage.GzipCompressorFileStorage', 'compressor.storage.BrotliCompressorFileStorage', 'compressor.storage.CompressorFileStorage'
-COMPRESS_STORAGE = 'compressor.storage.BrotliCompressorFileStorage'
+# COMPRESS_STORAGE = 'compressor.storage.BrotliCompressorFileStorage'
 
 
-# social google
+# END django-compress #
+
+
+# social google #
+
+
 # GOOGLE_CLIENT_FILE_PATH = os.environ['GOOGLE_CLIENT_FILE_PATH']
-GOOGLE_CLIENT_FILE_PATH = os.path.join(BASE_DIR, 'SocialGoogle', 'client_secret_104908188398-lovsjp717e2brlaqkao3tjc3kjpkn4o4.apps.googleusercontent.com.json')
+GOOGLE_CLIENT_FILE_PATH = os.path.join(
+    BASE_DIR,
+    'SocialGoogle',
+    'client_secret_104908188398-lovsjp717e2brlaqkao3tjc3kjpkn4o4.apps.googleusercontent.com.json',
+    )
 GOOGLE_OPTIONS = {'prompt': 'consent'}
 
-# Security Settings
 
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
+# END social google #
+
+
+# Security Settings #
+
+
+# SECURE_BROWSER_XSS_FILTER = True
+# SECURE_CONTENT_TYPE_NOSNIFF = True
 # SECURE_REDIRECT_EXEMPT = [r'^flex/index/$', ]
-SECURE_SSL_REDIRECT = True
-X_FRAME_OPTIONS = 'DENY'
+# SECURE_SSL_REDIRECT = True
+# X_FRAME_OPTIONS = 'DENY'
 # whitenoise use these only if HTTPS is available
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-# heroku
-import django_heroku
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
 
-django_heroku.settings(locals())
+
+# END Security Settings #
+
+
+# heroku #
+
+
+# import django_heroku
+#
+# django_heroku.settings(locals())
+
+
+# end heroku #
+
+

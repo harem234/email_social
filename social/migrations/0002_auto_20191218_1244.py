@@ -6,7 +6,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -18,14 +17,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='socialaccount',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='socialaccount_user', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='socialaccount_user',
+                                    to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddConstraint(
             model_name='socialaccount',
-            constraint=models.UniqueConstraint(fields=('user', 'provider', 'site'), name='user have one account per provider and site'),
+            constraint=models.UniqueConstraint(fields=('user', 'provider', 'site'),
+                                               name='user have one account per provider and site'),
         ),
         migrations.AddConstraint(
             model_name='socialaccount',
-            constraint=models.UniqueConstraint(fields=('social_id', 'provider', 'site'), name='every social_id per provider is unique for every site'),
+            constraint=models.UniqueConstraint(fields=('social_id', 'provider', 'site'),
+                                               name='every social_id per provider is unique for every site'),
         ),
     ]

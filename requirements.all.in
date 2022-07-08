@@ -5,7 +5,7 @@ requests
 
 whitenoise[brotli]
 
-# comoress and compile static files
+# compress and compile static files
 # django_compressor
 
 # gevent required for celery and gunicorn
@@ -16,7 +16,7 @@ gunicorn
 # django-db-geventpool
 
 # heroku
-django-heroku
+# django-heroku
 
 # development
 django-extensions

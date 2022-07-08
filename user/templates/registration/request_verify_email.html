@@ -1,0 +1,29 @@
+{% load i18n static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Sending emails to user in Python</title>
+
+</head>
+
+<body>
+    <p>{{ request.site }}</p>
+    {{ debug }}
+    <form method="post" action="{% url 'email_request_verify' %}">
+        {% csrf_token %}
+        <p> {% trans "your email is" %}: {{ request.user.email }} </p>
+        <input type="submit" value={% trans "send verification email" %} >
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+</body>
+
+</html>

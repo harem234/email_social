@@ -7,7 +7,6 @@ import social.models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -21,7 +20,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('social_id', models.CharField(max_length=1000)),
                 ('isConnected', models.BooleanField(default=False)),
-                ('email', models.CharField(max_length=1000, null=True, unique=True, validators=[django.core.validators.EmailValidator])),
+                ('email', models.CharField(max_length=1000, null=True, unique=True,
+                                           validators=[django.core.validators.EmailValidator])),
                 ('credentials', models.TextField(max_length=1000, null=True)),
                 ('scopes', models.TextField(max_length=1000, null=True)),
             ],
@@ -34,7 +34,9 @@ class Migration(migrations.Migration):
             name='SocialProvider',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('social', models.CharField(choices=[(None, 'Select Provider'), ('google', 'Google'), ('github', 'Github'), ('sentinel', 'sentinel')], db_column='social_provider', max_length=10, unique=True)),
+                ('social', models.CharField(
+                    choices=[(None, 'Select Provider'), ('google', 'Google'), ('github', 'Github'),
+                             ('sentinel', 'sentinel')], db_column='social_provider', max_length=10, unique=True)),
                 ('client_id', models.CharField(max_length=1000)),
             ],
             options={
@@ -44,16 +46,19 @@ class Migration(migrations.Migration):
         ),
         migrations.AddConstraint(
             model_name='socialprovider',
-            constraint=models.UniqueConstraint(fields=('social', 'client_id'), name='every client_id  per social is unique'),
+            constraint=models.UniqueConstraint(fields=('social', 'client_id'),
+                                               name='every client_id  per social is unique'),
         ),
         migrations.AddField(
             model_name='socialaccount',
             name='provider',
-            field=models.ForeignKey(on_delete=models.SET(social.models.get_sentinel_socialprovider), to='social.SocialProvider'),
+            field=models.ForeignKey(on_delete=models.SET(social.models.get_sentinel_socialprovider),
+                                    to='social.SocialProvider'),
         ),
         migrations.AddField(
             model_name='socialaccount',
             name='site',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='socialaccount_site', to='sites.Site'),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='socialaccount_site', to='sites.Site'),
         ),
     ]
