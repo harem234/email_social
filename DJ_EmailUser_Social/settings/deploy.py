@@ -11,9 +11,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'django-moon.herokuapp.com', ]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'django-moon.herokuapp.com', ]
 
 # development
 # ALLOWED_HOSTS = ['*']
