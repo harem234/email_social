@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.utils.encoding import force_text, force_bytes
+from django.utils.encoding import force_str, force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.decorators.http import require_http_methods
 from django.views.generic import CreateView, TemplateView
@@ -68,7 +68,7 @@ class VerifyEmailView(View):
         # validate users email
 
         try:
-            uid = force_text(urlsafe_base64_decode(uidb64))
+            uid = force_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(pk=uid)
         except(TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
