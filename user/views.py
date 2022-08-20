@@ -83,7 +83,7 @@ class VerifyEmailView(View):
     def post(self, request, *args, **kwargs):
         # send an email to user's email address
 
-        uid = urlsafe_base64_encode(force_bytes(request.user.pk)),
+        uid = urlsafe_base64_encode(force_bytes(request.user.pk))
         token = default_token_generator.make_token(request.user)
 
         template_context = {

@@ -101,9 +101,8 @@ venv.bak/
 /site
 
 # mypy
-<<<<<<< HEAD
 .mypy_cache/
-=======
+
 
 # pycharm
 .idea/
@@ -119,17 +118,6 @@ venv.bak/
 ### Google client file ###
 #SocialGoogle/client_secret.json
 
-### Migrations ###
-# ALSTAR/migrations/*
-# !ALSTAR/migrations/__init__.py
-# philosophy/migrations/*
-# !philosophy/migrations/__init__.py
-# social/migrations/*
-# !social/migrations/__init__.py
-# SocialGoogle/migrations/*
-# !SocialGoogle/migrations/__init__.py
-# user/migrations/*
-# !user/migrations/__init__.py
 
 ### Django ###
 settings/local.py
@@ -137,3 +125,7 @@ settings/local.py
 # staticfiles/**
 
 # requirements.txt
+
+/venv
+
+/requirements.*.txt

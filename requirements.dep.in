@@ -1,4 +1,4 @@
-django==3.2.*
+django==4.1.*
 
 google-auth-oauthlib
 requests
@@ -6,7 +6,7 @@ requests
 whitenoise[brotli]
 
 # gevent required for celery and gunicorn
-gunicorn
+# gunicorn
 
 # heroku, deprecated
 # django-heroku
