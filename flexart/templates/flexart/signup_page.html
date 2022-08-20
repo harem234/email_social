@@ -78,7 +78,8 @@ c
                         <div class="col-md-12 d-flex justify-content-between">
                             <button type="button" class="btn btn-danger">Submit</button>
                             <button type="button"
-                                    href="{% if request.GET.cancel %}{{ request.GET.cancel }}{% else %}{% url 'FLEX:index' %}{% endif %}"
+                                    href="
+                                            {% if request.GET.cancel %}{{ request.GET.cancel }}{% else %}{% url 'FLEX:index' %}{% endif %}"
                                     class="btn btn-danger">Cancel
                             </button>
                         </div>

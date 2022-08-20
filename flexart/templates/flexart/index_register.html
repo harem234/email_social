@@ -3,11 +3,11 @@
 {#{% load compress %}#}
 
 {% block headcontent %}
-{#    {% compress css %}#}
-        <!-- banner slider css -->
-        <link href="{% static "flexart/css/minimal-slider.css" %}" rel='stylesheet' type='text/css'/>
-        <!-- //banner slider css -->
-{#    {% endcompress %}#}
+    {#    {% compress css %}#}
+    <!-- banner slider css -->
+    <link href="{% static "flexart/css/minimal-slider.css" %}" rel='stylesheet' type='text/css'/>
+    <!-- //banner slider css -->
+    {#    {% endcompress %}#}
 {% endblock %}
 
 {% block content %}
@@ -457,6 +457,7 @@
                             <a href=
                                        "
 
+
                                                {% if request.GET.cancel %}{{ request.GET.cancel }}{% else %}{% url 'FLEX:index' %}{% endif %}"
                                type="button"
                                class="mb-4 float-right btn btn-outline-dark ">Cancel</a>
@@ -557,15 +558,15 @@
     </script>
     <!-- //popup register modal -->
 
-{#    {% compress js %}#}
-        <!-- banner slider js -->
-        <script src="{% static "flexart/js/minimal-slider.js" %}"></script>
-        <!-- //banner slider js -->
+    {#    {% compress js %}#}
+    <!-- banner slider js -->
+    <script src="{% static "flexart/js/minimal-slider.js" %}"></script>
+    <!-- //banner slider js -->
 
-        <!-- Stats-Number-Scroller-Animation-JavaScript -->
-        <script src="{% static "flexart/js/waypoints.min.js" %}"></script>
-        <script src="{% static "flexart/js/counterup.min.js" %}"></script>
-{#    {% endcompress %}#}
+    <!-- Stats-Number-Scroller-Animation-JavaScript -->
+    <script src="{% static "flexart/js/waypoints.min.js" %}"></script>
+    <script src="{% static "flexart/js/counterup.min.js" %}"></script>
+    {#    {% endcompress %}#}
     <script>
         jQuery(document).ready(function ($) {
             $('.counter').counterUp({

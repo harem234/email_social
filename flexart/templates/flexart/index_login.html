@@ -3,15 +3,15 @@
 {#{% load compress %}#}
 
 {% block headcontent %}
-{#    {% compress css inline %}#}
-        <!-- banner slider css -->
-        <link href="{% static "flexart/css/minimal-slider.css" %}" rel='stylesheet' type='text/css'/>
-        <!-- //banner slider css -->
+    {#    {% compress css inline %}#}
+    <!-- banner slider css -->
+    <link href="{% static "flexart/css/minimal-slider.css" %}" rel='stylesheet' type='text/css'/>
+    <!-- //banner slider css -->
 
-        <!-- google -->
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-        <!-- //google -->
-{#    {% endcompress %}#}
+    <!-- google -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- //google -->
+    {#    {% endcompress %}#}
 {% endblock headcontent %}
 
 {% block content %}
@@ -554,23 +554,23 @@
     </script>
 
     <!-- /popup login page -->
-{#    {% compress js %}#}
-        <!-- banner slider js -->
-        <script src="{% static "flexart/js/minimal-slider.js" %}"></script>
-        <!-- //banner slider js -->
+    {#    {% compress js %}#}
+    <!-- banner slider js -->
+    <script src="{% static "flexart/js/minimal-slider.js" %}"></script>
+    <!-- //banner slider js -->
 
-        <!-- Stats-Number-Scroller-Animation-JavaScript -->
-        <script src="{% static "flexart/js/waypoints.min.js" %}"></script>
-        <script src="{% static "flexart/js/counterup.min.js" %}"></script>
-        <script>
-            jQuery(document).ready(function ($) {
-                $('.counter').counterUp({
-                    delay: 100,
-                    time: 1000
-                });
+    <!-- Stats-Number-Scroller-Animation-JavaScript -->
+    <script src="{% static "flexart/js/waypoints.min.js" %}"></script>
+    <script src="{% static "flexart/js/counterup.min.js" %}"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $('.counter').counterUp({
+                delay: 100,
+                time: 1000
             });
-        </script>
-        <!-- //Stats-Number-Scroller-Animation-JavaScript -->
-{#    {% endcompress js %}#}
+        });
+    </script>
+    <!-- //Stats-Number-Scroller-Animation-JavaScript -->
+    {#    {% endcompress js %}#}
 {% endblock %}
 

@@ -293,11 +293,11 @@
     background-color: #fff;
 }
 
-@media screen and (max-width:1080px) {
+@media screen and (max-width: 1080px) {
 
 }
 
-@media screen and (max-width:1050px) {
+@media screen and (max-width: 1050px) {
     .slide-window .slide-wrapper .slide .slide-caption {
         position: absolute;
         bottom: 30%;
@@ -306,21 +306,25 @@
         padding: 3em 1em;
     }
 }
-@media screen and (max-width:1024px) {
-}
-@media screen and (max-width:991px) {
 
-.slide-window .slide-wrapper .slide .slide-caption {
-    bottom: 27%;
+@media screen and (max-width: 1024px) {
 }
+
+@media screen and (max-width: 991px) {
+
+    .slide-window .slide-wrapper .slide .slide-caption {
+        bottom: 27%;
+    }
 }
-@media screen and (max-width:800px) {
-   
+
+@media screen and (max-width: 800px) {
+
 }
 
 @media screen and (max-width: 768px) {
 
 }
+
 @media screen and (max-width: 767px) {
 
     .slide-control-btn ul {
@@ -333,23 +337,27 @@
     }
 
 }
-@media screen and (max-width:667px) {
- .slide-window .slide-wrapper .slide .slide-caption {
-    position: absolute;
-    bottom: 26%;
-    left:15%;
-    width: 70%;
-    padding: 2em 1em;
+
+@media screen and (max-width: 667px) {
+    .slide-window .slide-wrapper .slide .slide-caption {
+        position: absolute;
+        bottom: 26%;
+        left: 15%;
+        width: 70%;
+        padding: 2em 1em;
+    }
 }
-}
-@media screen and (max-width:600px) {
-    
-}
-@media screen and (max-width:480px) {
+
+@media screen and (max-width: 600px) {
 
 }
-@media screen and (max-width:414px) {
-    
+
+@media screen and (max-width: 480px) {
+
+}
+
+@media screen and (max-width: 414px) {
+
     .slide-window .slide-wrapper .slide .slide-caption {
         position: absolute;
         left: 17%;
@@ -357,14 +365,17 @@
         padding: 1.5em 0em;
     }
 }
-@media screen and (max-width:375px) {
-    
-	.slide-control-right {
-    opacity: 1;
-    right: 2%;
+
+@media screen and (max-width: 375px) {
+
+    .slide-control-right {
+        opacity: 1;
+        right: 2%;
+    }
+
+    .slide-window .slide-wrapper .slide .slide-caption {
+        bottom: 21%;
+    }
 }
-.slide-window .slide-wrapper .slide .slide-caption {
-    bottom: 21%;
-}
-}
+
 /*# sourceMappingURL=style.css.map */

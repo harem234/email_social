@@ -1,18 +1,18 @@
+from django.contrib.auth import views, get_user_model
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView
 from django.core.mail import send_mail
 from django.http import HttpResponse
-from django.utils.decorators import method_decorator
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
-from django.utils.translation import gettext_lazy as _
+from django.utils.decorators import method_decorator
 from django.utils.encoding import force_str, force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.views.decorators.http import require_http_methods
-from django.views.generic import CreateView, TemplateView
+from django.utils.translation import gettext_lazy as _
 from django.views import View
-from django.template.loader import render_to_string
-from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import views, get_user_model
-from django.contrib.auth.tokens import default_token_generator
+from django.views.decorators.http import require_http_methods
+from django.views.generic import CreateView
 
 from .forms import CustomUserCreationForm
 

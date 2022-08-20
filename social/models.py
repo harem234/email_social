@@ -1,6 +1,6 @@
-from django.db import models
 from django.conf import settings
 from django.contrib.sites.models import Site
+from django.db import models
 
 
 # signal: pre_delete is set for SocialProvider

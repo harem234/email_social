@@ -7,7 +7,7 @@
     <!-- Meta tag Keywords -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-    <meta name="keywords" content="responsive web development Django backend rest django-rest-framework heroku devOp
+    <meta name="keywords" content="responsive web development Django backend rest django-rest-framework heroku dev-Op
 S3 amazon"/>
     <!--// Meta tag Keywords -->
     <script>
@@ -24,46 +24,50 @@ S3 amazon"/>
     {#    <link rel="stylesheet" href="{% static "flexart/css/bootstrap.css" %}"> <!-- Bootstrap-Core-CSS -->#}
 
     <<!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+          crossorigin="anonymous"
+    >
 
-  {#    {% compress css inline %}#}
-      <!-- Style-CSS -->
-      <link rel="stylesheet" href="{% static "flexart/css/style6.css" %}" type="text/css" media="all"/>
-      <link rel="stylesheet" href="{% static "flexart/css/style.css" %}" type="text/css" media="all"/>
-{#    {% endcompress %}#}
 
-{#    {% compress css %}#}
-        <!-- Font-Awesome-Icons-CSS -->
-        <link as="style" rel="preload stylesheet" href="{% static "flexart/css/fontawesome-all.css" %}" type="text/css"/>
-        <!-- go to top button css-->
-        <style>
-            html {
-                scroll-behavior: smooth;
-            }
+    {#    {% compress css inline %}#}
+    <!-- Style-CSS -->
+    <link rel="stylesheet" href="{% static "flexart/css/style6.css" %}" type="text/css" media="all"/>
+    <link rel="stylesheet" href="{% static "flexart/css/style.css" %}" type="text/css" media="all"/>
+    {#    {% endcompress %}#}
 
-            #btn_gototop {
-                display: none; /* Hidden by default */
-                position: fixed; /* Fixed/sticky position */
-                bottom: 20px; /* Place the button at the bottom of the page */
-                right: 30px; /* Place the button 30px from the right */
-                z-index: 99; /* Make sure it does not overlap */
-                border: none; /* Remove borders */
-                outline: none; /* Remove outline */
-                background-color: darkorange; /* Set a background color */
-                color: white; /* Text color */
-                cursor: pointer; /* Add a mouse pointer on hover */
-                padding: 10px; /* Some padding */
-                border-radius: 10px; /* Rounded corners */
-                font-size: 18px; /* Increase font size */
-            }
+    {#    {% compress css %}#}
+    <!-- Font-Awesome-Icons-CSS -->
+    <link as="style" rel="preload stylesheet" href="{% static "flexart/css/fontawesome-all.css" %}" type="text/css"/>
+    <!-- go to top button css-->
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
 
-            #btn_gototop:hover {
-                background-color: #555; /* Add a dark-grey background on hover */
-            }
-        </style>
-        <!-- /go to top button css-->
-        <!-- //css files -->
-{#    {% endcompress %}#}
+        #btn_gototop {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed/sticky position */
+            bottom: 20px; /* Place the button at the bottom of the page */
+            right: 30px; /* Place the button 30px from the right */
+            z-index: 99; /* Make sure it does not overlap */
+            border: none; /* Remove borders */
+            outline: none; /* Remove outline */
+            background-color: darkorange; /* Set a background color */
+            color: white; /* Text color */
+            cursor: pointer; /* Add a mouse pointer on hover */
+            padding: 10px; /* Some padding */
+            border-radius: 10px; /* Rounded corners */
+            font-size: 18px; /* Increase font size */
+        }
+
+        #btn_gototop:hover {
+            background-color: #555; /* Add a dark-grey background on hover */
+        }
+    </style>
+    <!-- /go to top button css-->
+    <!-- //css files -->
+    {#    {% endcompress %}#}
 
 
     <!--web font-->
@@ -366,31 +370,38 @@ S3 amazon"/>
 </button>
 <!-- /go to top button-->
 
-<!-- js -->
+<!-- js bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-{#<script src="{% static "flexart/js/bootstrap.js" %}"></script> <!-- Necessary-JavaScript-File-For-Bootstrap -->#}
-{##}
-{#<script src="{% static  'flexart/js/jquery-2.1.4.min.js' %}"></script>#}
-<!-- //js -->
+<!--
+<script src="{% static "flexart/js/bootstrap.js" %}"></script>
+
+<script src="{% static  'flexart/js/jquery-2.1.4.min.js' %}"></script>
+
+<script src="{% static "flexart/js/modernizr-2.6.2.min.js" %}"></script>
+-->
 
 {#{% compress js %}#}
-    <!-- search overlay -->
-    <script src="{% static "flexart/js/modernizr-2.6.2.min.js" %}"></script>
-    <!-- //search overlay -->
 
-    <!--search jQuery-->
-    <script src="{% static "flexart/js/classie-search.js" %}"></script>
-    <script src="{% static "flexart/js/demo1-search.js" %}"></script>
-    <!--//search jQuery-->
+<!--
+<script src="{% static "flexart/js/modernizr-2.6.2.min.js" %}"></script>
+-->
+
+<!-- search overlay -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+        integrity="sha512-3n19xznO0ubPpSwYCRRBgHh63DrV+bdZfHK52b1esvId4GsfwStQNPJFjeQos2h3JwCmZl0/LgLxSKMAI55hgw=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer">
+
+</script>
+<!-- //search overlay -->
+
+<!--search jQuery-->
+<script src="{% static "flexart/js/classie-search.js" %}"></script>
+<script src="{% static "flexart/js/demo1-search.js" %}"></script>
+<!--//search jQuery-->
 {#{% endcompress %}#}
 
 
@@ -400,103 +411,103 @@ S3 amazon"/>
 
 <!-- start-smooth-scrolling -->
 {#{% compress js %}#}
-    <script src="{% static 'flexart/js/SmoothScroll.min.js' %}"></script>
-    <script src="{% static 'flexart/js/move-top.js' %}"></script>
-    <script src="{% static 'flexart/js/easing.js' %}"></script>
+<script src="{% static 'flexart/js/SmoothScroll.min.js' %}"></script>
+<script src="{% static 'flexart/js/move-top.js' %}"></script>
+<script src="{% static 'flexart/js/easing.js' %}"></script>
 {#{% endcompress %}#}
 
 {#{% compress js inline %}#}
-    <script>
-        jQuery(document).ready(function ($) {
-            $(".scroll").click(function (event) {
-                event.preventDefault();
-                $('html,body').animate({scrollTop: $(this.hash).offset().top}, 1000);
-            });
+<script>
+    jQuery(document).ready(function ($) {
+        $(".scroll").click(function (event) {
+            event.preventDefault();
+            $('html,body').animate({scrollTop: $(this.hash).offset().top}, 1000);
         });
-    </script>
-    <!-- here stars scrolling icon -->
-    <script>
-        $(document).ready(function () {
-            /*
-                var defaults = {
-                containerID: 'toTop', // fading element id
-                containerHoverID: 'toTopHover', // fading element hover id
-                scrollSpeed: 1200,
-                easingType: 'linear'
-                };
-            */
-            $().UItoTop({easingType: 'easeOutQuart'});
+    });
+</script>
+<!-- here stars scrolling icon -->
+<script>
+    $(document).ready(function () {
+        /*
+            var defaults = {
+            containerID: 'toTop', // fading element id
+            containerHoverID: 'toTopHover', // fading element hover id
+            scrollSpeed: 1200,
+            easingType: 'linear'
+            };
+        */
+        $().UItoTop({easingType: 'easeOutQuart'});
+    });
+</script>
+<!-- //here ends scrolling icon -->
+
+<!-- Support for loading cross-browser support -->
+<script>
+    // if browser support 'loading' attribute
+    if ('loading' in HTMLImageElement.prototype) {
+        console.log("support 'loading' ");
+        const images = document.querySelectorAll("img.lazyload");
+        images.forEach(img => {
+            img.src = img.dataset.src;
         });
-    </script>
-    <!-- //here ends scrolling icon -->
-
-    <!-- Support for loading cross-browser support -->
-    <script>
-        // if browser support 'loading' attribute
-        if ('loading' in HTMLImageElement.prototype) {
-            console.log("support 'loading' ");
-            const images = document.querySelectorAll("img.lazyload");
-            images.forEach(img => {
-                img.src = img.dataset.src;
-            });
-            // if browser support Intersection Observer API
-        } else if (("IntersectionObserver" in window)) {
-            console.log("Intersection Observer");
-            document.addEventListener("DOMContentLoaded", function () {
-                let lazyloadImages = document.querySelectorAll(".lazyload");
-                let imageObserver = new IntersectionObserver(function (entries, observer) {
-                    entries.forEach(function (entry) {
-                        if (entry.isIntersecting) {
-                            const image = entry.target;
-                            image.src = image.dataset.src;
-                            image.classList.remove("lazyload");
-                            imageObserver.unobserve(image);
-                        }
-                    });
-                });
-
-                lazyloadImages.forEach(function (image) {
-                    imageObserver.observe(image);
+        // if browser support Intersection Observer API
+    } else if (("IntersectionObserver" in window)) {
+        console.log("Intersection Observer");
+        document.addEventListener("DOMContentLoaded", function () {
+            let lazyloadImages = document.querySelectorAll(".lazyload");
+            let imageObserver = new IntersectionObserver(function (entries, observer) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        const image = entry.target;
+                        image.src = image.dataset.src;
+                        image.classList.remove("lazyload");
+                        imageObserver.unobserve(image);
+                    }
                 });
             });
-            // if browser don't support above (Last hope)
+
+            lazyloadImages.forEach(function (image) {
+                imageObserver.observe(image);
+            });
+        });
+        // if browser don't support above (Last hope)
+    } else {
+        // Dynamically import the LazySizes library
+        let script = document.createElement("script");
+        script.async = true;
+        script.src =
+            "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.1.8/lazysizes.min.js";
+        document.body.appendChild(script);
+    }
+</script>
+<!-- /Support for loading cross-browser support -->
+
+
+<!-- go to top button js-->
+<script>
+    //Get the button:
+    mybutton = document.getElementById("btn_gototop");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () {
+        scrollFunction()
+    };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
         } else {
-            // Dynamically import the LazySizes library
-            let script = document.createElement("script");
-            script.async = true;
-            script.src =
-                "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.1.8/lazysizes.min.js";
-            document.body.appendChild(script);
+            mybutton.style.display = "none";
         }
-    </script>
-    <!-- /Support for loading cross-browser support -->
+    }
 
-
-    <!-- go to top button js-->
-    <script>
-        //Get the button:
-        mybutton = document.getElementById("btn_gototop");
-
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function () {
-            scrollFunction()
-        };
-
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                mybutton.style.display = "block";
-            } else {
-                mybutton.style.display = "none";
-            }
-        }
-
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-            document.body.scrollTop = 0; // For Safari
-            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-        }
-    </script>
-    <!-- /go to top button js-->
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+</script>
+<!-- /go to top button js-->
 {#{% endcompress %}#}
 
 

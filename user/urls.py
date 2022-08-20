@@ -1,5 +1,5 @@
-from django.urls import path, reverse_lazy
 from django.contrib.auth import views as auth_view
+from django.urls import path, reverse_lazy
 from django.views.generic import TemplateView
 
 from .views import PostLogoutView, CustomPasswordChangeView, VerifyEmailView

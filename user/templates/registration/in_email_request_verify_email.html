@@ -4,7 +4,7 @@
 
 <html lang="en">
 
-  <head>
+<head>
 
     <meta charset="UTF-8"/>
 
@@ -12,28 +12,30 @@
 
     <title>Sending emails to user in Python</title>
 
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <h3>Hello {{user}} from {{ request.site }}</h3>
+<h3>Hello {{ user }} from {{ request.site }}</h3>
 
-    <p>You requested email to verify your email</p>
+<p>You requested email to verify your email</p>
 
-    <p>Click the link below please to verify your email</p>
+<p>Click the link below please to verify your email</p>
 
-    {% autoescape off %}
-        {% if debug %}
+{% autoescape off %}
+{% if debug %}
 
-            <a href="http://{{ request.site }}{% url 'email_verify' uidb64=uid token=token %}">{% trans 'click me for verifing your email' %}</a>
+    <a href="http://
+            {{ request.site }}{% url 'email_verify' uidb64=uid token=token %}">{% trans 'click me for verifing your email' %}</a>
 
-        {% else %}
+{% else %}
 
-            <a href="https://{{ request.site }}{% url 'email_verify' uidb64=uid token=token %}">{% trans 'click me for verifing your email' %}</a>
+    <a href="https://
+            {{ request.site }}{% url 'email_verify' uidb64=uid token=token %}">{% trans 'click me for verifing your email' %}</a>
 
-        {% endif %}
-    {% endautoescape %}
+{% endif %}
+{% endautoescape %}
 
-  </body>
+</body>
 
 </html>

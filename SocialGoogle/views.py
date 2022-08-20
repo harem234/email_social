@@ -1,18 +1,20 @@
 import sys
+
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.views import redirect_to_login
 from django.contrib.sites.models import Site
-from django.views.generic.base import View
-from django.views.generic import TemplateView
+from django.db import DatabaseError
+from django.http import JsonResponse
+from django.shortcuts import redirect
+from django.urls import reverse_lazy, reverse
+from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_http_methods
-from django.urls import reverse_lazy, reverse
-from django.http import JsonResponse
-from django.utils.decorators import method_decorator
-from django.shortcuts import redirect
-from django.db import DatabaseError
+from django.views.generic import TemplateView
+from django.views.generic.base import View
+
 from social.models import SocialAccount, SocialProvider
 
 if hasattr(settings, 'GOOGLE_CLIENT_FILE_PATH'):

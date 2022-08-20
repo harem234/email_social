@@ -1,10 +1,10 @@
-from django.views.generic import TemplateView
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, \
+    PasswordResetConfirmView
 from django.urls import path, reverse_lazy
+from django.views.generic import TemplateView
 
 from user.views import SignUpView, CustomLoginView, CustomPasswordChangeView, CustomPasswordChangeDoneView, \
     PostLogoutView
-from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, \
-    PasswordResetConfirmView
 
 app_name = 'FLEX'
 

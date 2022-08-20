@@ -2,12 +2,12 @@
 {% load static %}
 {#{% load compress %}#}
 {% block headcontent %}
-{#    {% compress css %}#}
-        <!-- Testimonials-slider-css-files -->
-        <link rel="stylesheet" href="{% static 'flexart/css/owl.carousel.css' %}" type="text/css" media="all">
-        <link rel="stylesheet" href="{% static 'flexart/css/owl.theme.css' %}">
-        <!-- //Testimonials-slider-css-files -->
-{#    {% endcompress %}#}
+    {#    {% compress css %}#}
+    <!-- Testimonials-slider-css-files -->
+    <link rel="stylesheet" href="{% static 'flexart/css/owl.carousel.css' %}" type="text/css" media="all">
+    <link rel="stylesheet" href="{% static 'flexart/css/owl.theme.css' %}">
+    <!-- //Testimonials-slider-css-files -->
+    {#    {% endcompress %}#}
 {% endblock %}
 
 {% block content %}
@@ -32,7 +32,8 @@
                     <div class="f1 p-sm-5 p-4">
                         <i class="fas fa-arrow-right" aria-hidden="true"></i>
                         <h3 class="my-3">Feature 1</h3>
-                        <p>Deploy Django app on heroku or other cloud services using docker or plain config and config amazon s3 CDN.</p>
+                        <p>Deploy Django app on heroku or other cloud services using docker or plain config and config
+                            amazon s3 CDN.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 mt-md-0 mt-sm-5 mt-4">
@@ -72,14 +73,15 @@
                 <div class="row grids">
                     <div class="col-lg-6">
                         <h4 class="title">Proffessional Skills</h4>
-                        <p class="my-4">Design, Develop and Deploy Django applications, CEO and page loadings, specializing websites.</p>
-{#                        <div class="bnr-button">#}
-{#                            <button type="button" class="btn btn-primary play" data-toggle="modal"#}
-{#                                    data-target="#exampleModal">#}
-{#                                <i class="fas fa-play"></i>#}
-{#                            </button>#}
-{#                            <span class="text-white ml-2">Watch Video </span>#}
-{#                        </div>#}
+                        <p class="my-4">Design, Develop and Deploy Django applications, CEO and page loadings,
+                            specializing websites.</p>
+                        {#                        <div class="bnr-button">#}
+                        {#                            <button type="button" class="btn btn-primary play" data-toggle="modal"#}
+                        {#                                    data-target="#exampleModal">#}
+                        {#                                <i class="fas fa-play"></i>#}
+                        {#                            </button>#}
+                        {#                            <span class="text-white ml-2">Watch Video </span>#}
+                        {#                        </div>#}
                     </div>
                     <div class="col-md-6 mt-lg-0 mt-5">
                         <div class="progress-one">
@@ -125,106 +127,106 @@
     </section>
     <!-- //Skills -->
 
-{#    <!-- testimonals section -->#}
-{#    <div class="testimonals">#}
-{#        <div class="container">#}
-{#            <div class="heading pb-4">#}
-{#                <h3 class="heading mb-2 text-center">Clients <span> Testimonials</span></h3>#}
-{#                <p class="para mb-5 text-center">Excepteur sint occaecat non proident, sunt in culpa quis. Phasellus#}
-{#                    lacinia#}
-{#                    id.</p>#}
-{#            </div>#}
-{#            <div class="section_1its-feedback-grids">#}
-{#                <div id="owl-demo" class="owl-carousel owl-theme">#}
-{#                    <div class="item">#}
-{#                        <div class="testimonal grid-1">#}
-{#                            <div class="first-grid">#}
-{#                                <img src="{% static "flexart/images/t1.jpg" %}" alt=""/>#}
-{#                                <h3>Mary Jane</h3>#}
-{#                                <p>Cras tortor ipsum, gravida vitae finibus non, bibendum quis turpis. Cras semper#}
-{#                                    accumsan#}
-{#                                    metus, et aliquet diam vestibulum ut. </p>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="item">#}
-{#                        <div class="testimonal grid-1">#}
-{#                            <div class="first-grid">#}
-{#                                <img src="{% static "flexart/images/t2.jpg" %}" alt=""/>#}
-{#                                <h3>Selena</h3>#}
-{#                                <p>Cras tortor ipsum, gravida vitae finibus non, bibendum quis turpis. Cras semper#}
-{#                                    accumsan#}
-{#                                    metus, et aliquet diam vestibulum ut. </p>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="item">#}
-{#                        <div class="testimonal grid-1">#}
-{#                            <div class="first-grid">#}
-{#                                <img src="{% static "flexart/images/t3.jpg" %}" alt=""/>#}
-{#                                <h3>Watson</h3>#}
-{#                                <p>Cras tortor ipsum, gravida vitae finibus non, bibendum quis turpis. Cras semper#}
-{#                                    accumsan#}
-{#                                    metus, et aliquet diam vestibulum ut. </p>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="item">#}
-{#                        <div class="testimonal grid-1">#}
-{#                            <div class="first-grid">#}
-{#                                <img src="{% static "flexart/images/t1.jpg" %}" alt=""/>#}
-{#                                <h3>Steven</h3>#}
-{#                                <p>Cras tortor ipsum, gravida vitae finibus non, bibendum quis turpis. Cras semper#}
-{#                                    accumsan#}
-{#                                    metus, et aliquet diam vestibulum ut. </p>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="item">#}
-{#                        <div class="testimonal grid-1">#}
-{#                            <div class="first-grid">#}
-{#                                <img src="{% static "flexart/images/t2.jpg" %}" alt=""/>#}
-{#                                <h3>Mary Jane</h3>#}
-{#                                <p>Cras tortor ipsum, gravida vitae finibus non, bibendum quis turpis. Cras semper#}
-{#                                    accumsan#}
-{#                                    metus, et aliquet diam vestibulum ut. </p>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="item">#}
-{#                        <div class="testimonal grid-1">#}
-{#                            <div class="first-grid">#}
-{#                                <img src="{% static "flexart/images/t3.jpg" %}" alt=""/>#}
-{#                                <h3>Selena</h3>#}
-{#                                <p>Cras tortor ipsum, gravida vitae finibus non, bibendum quis turpis. Cras semper#}
-{#                                    accumsan#}
-{#                                    metus, et aliquet diam vestibulum ut. </p>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#    <!-- /testimonals section -->#}
+    {#    <!-- testimonals section -->#}
+    {#    <div class="testimonals">#}
+    {#        <div class="container">#}
+    {#            <div class="heading pb-4">#}
+    {#                <h3 class="heading mb-2 text-center">Clients <span> Testimonials</span></h3>#}
+    {#                <p class="para mb-5 text-center">Excepteur sint occaecat non proident, sunt in culpa quis. Phasellus#}
+    {#                    lacinia#}
+    {#                    id.</p>#}
+    {#            </div>#}
+    {#            <div class="section_1its-feedback-grids">#}
+    {#                <div id="owl-demo" class="owl-carousel owl-theme">#}
+    {#                    <div class="item">#}
+    {#                        <div class="testimonal grid-1">#}
+    {#                            <div class="first-grid">#}
+    {#                                <img src="{% static "flexart/images/t1.jpg" %}" alt=""/>#}
+    {#                                <h3>Mary Jane</h3>#}
+    {#                                <p>Cras tortor ipsum, gravida vitae finibus non, bibendum quis turpis. Cras semper#}
+    {#                                    accumsan#}
+    {#                                    metus, et aliquet diam vestibulum ut. </p>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="item">#}
+    {#                        <div class="testimonal grid-1">#}
+    {#                            <div class="first-grid">#}
+    {#                                <img src="{% static "flexart/images/t2.jpg" %}" alt=""/>#}
+    {#                                <h3>Selena</h3>#}
+    {#                                <p>Cras tortor ipsum, gravida vitae finibus non, bibendum quis turpis. Cras semper#}
+    {#                                    accumsan#}
+    {#                                    metus, et aliquet diam vestibulum ut. </p>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="item">#}
+    {#                        <div class="testimonal grid-1">#}
+    {#                            <div class="first-grid">#}
+    {#                                <img src="{% static "flexart/images/t3.jpg" %}" alt=""/>#}
+    {#                                <h3>Watson</h3>#}
+    {#                                <p>Cras tortor ipsum, gravida vitae finibus non, bibendum quis turpis. Cras semper#}
+    {#                                    accumsan#}
+    {#                                    metus, et aliquet diam vestibulum ut. </p>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="item">#}
+    {#                        <div class="testimonal grid-1">#}
+    {#                            <div class="first-grid">#}
+    {#                                <img src="{% static "flexart/images/t1.jpg" %}" alt=""/>#}
+    {#                                <h3>Steven</h3>#}
+    {#                                <p>Cras tortor ipsum, gravida vitae finibus non, bibendum quis turpis. Cras semper#}
+    {#                                    accumsan#}
+    {#                                    metus, et aliquet diam vestibulum ut. </p>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="item">#}
+    {#                        <div class="testimonal grid-1">#}
+    {#                            <div class="first-grid">#}
+    {#                                <img src="{% static "flexart/images/t2.jpg" %}" alt=""/>#}
+    {#                                <h3>Mary Jane</h3>#}
+    {#                                <p>Cras tortor ipsum, gravida vitae finibus non, bibendum quis turpis. Cras semper#}
+    {#                                    accumsan#}
+    {#                                    metus, et aliquet diam vestibulum ut. </p>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="item">#}
+    {#                        <div class="testimonal grid-1">#}
+    {#                            <div class="first-grid">#}
+    {#                                <img src="{% static "flexart/images/t3.jpg" %}" alt=""/>#}
+    {#                                <h3>Selena</h3>#}
+    {#                                <p>Cras tortor ipsum, gravida vitae finibus non, bibendum quis turpis. Cras semper#}
+    {#                                    accumsan#}
+    {#                                    metus, et aliquet diam vestibulum ut. </p>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
+    {#    <!-- /testimonals section -->#}
 
-{#    <!-- explore -->#}
-{#    <div class="serv_bottom">#}
-{#        <div class="bottom-bg py-5 bs-slider-overlay text-left">#}
-{#            <div class="container py-sm-3">#}
-{#                <div class="d-md-flex justify-content-around pb-smm-4">#}
-{#                    <h4 class="agile-ser_bot text-capitalize text-white">check our newest projects</h4>#}
-{#                    <div class="read">#}
-{#                        <a href="projects.html">Explore Now <span class="btn ml-2"><i class="fas fa-arrow-right"#}
-{#                                                                                      aria-hidden="true"></i></span></a>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <hr>#}
-{#                <h5 class="text-center text-uppercase text-white pt-sm-4">everything you need is here</h5>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#    <!-- //explore -->#}
+    {#    <!-- explore -->#}
+    {#    <div class="serv_bottom">#}
+    {#        <div class="bottom-bg py-5 bs-slider-overlay text-left">#}
+    {#            <div class="container py-sm-3">#}
+    {#                <div class="d-md-flex justify-content-around pb-smm-4">#}
+    {#                    <h4 class="agile-ser_bot text-capitalize text-white">check our newest projects</h4>#}
+    {#                    <div class="read">#}
+    {#                        <a href="projects.html">Explore Now <span class="btn ml-2"><i class="fas fa-arrow-right"#}
+    {#                                                                                      aria-hidden="true"></i></span></a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <hr>#}
+    {#                <h5 class="text-center text-uppercase text-white pt-sm-4">everything you need is here</h5>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
+    {#    <!-- //explore -->#}
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -252,24 +254,24 @@
 {% endblock %}
 
 {% block footer_script %}
-{#    {% compress js %}#}
-        <!-- for testimonials slider-js-file-->
-        <script src="{% static "flexart/js/owl.carousel.js" %}"></script>
-        <!-- //for testimonials slider-js-file-->
+    {#    {% compress js %}#}
+    <!-- for testimonials slider-js-file-->
+    <script src="{% static "flexart/js/owl.carousel.js" %}"></script>
+    <!-- //for testimonials slider-js-file-->
 
-        <!-- for testimonials slider-js-script-->
-        <script>
-            $(document).ready(function () {
-                $("#owl-demo").owlCarousel({
-                    autoPlay: 3000, //Set AutoPlay to 3 seconds
-                    autoPlay: true,
-                    items: 3,
-                    itemsDesktop: [640, 5],
-                    itemsDesktopSmall: [414, 4],
-                });
+    <!-- for testimonials slider-js-script-->
+    <script>
+        $(document).ready(function () {
+            $("#owl-demo").owlCarousel({
+                autoPlay: 3000, //Set AutoPlay to 3 seconds
+                autoPlay: true,
+                items: 3,
+                itemsDesktop: [640, 5],
+                itemsDesktopSmall: [414, 4],
             });
-        </script>
-        <!-- //for testimonials slider-js-script-->
-{#    {% endcompress %}#}
+        });
+    </script>
+    <!-- //for testimonials slider-js-script-->
+    {#    {% endcompress %}#}
 {% endblock footer_script %}
 

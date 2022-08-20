@@ -223,9 +223,8 @@ GOOGLE_CLIENT_FILE_PATH = os.path.join(
     BASE_DIR,
     'SocialGoogle',
     'client_secret_104908188398-lovsjp717e2brlaqkao3tjc3kjpkn4o4.apps.googleusercontent.com.json',
-    )
+)
 GOOGLE_OPTIONS = {'prompt': 'consent'}
-
 
 # END social google #
 
@@ -255,5 +254,3 @@ GOOGLE_OPTIONS = {'prompt': 'consent'}
 
 
 # end heroku #
-
-

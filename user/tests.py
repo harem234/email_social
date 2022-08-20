@@ -1,5 +1,5 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.test import TestCase
 
 User = get_user_model()
 
@@ -58,7 +58,7 @@ class CustomUserTestCase(TestCase):
 
     def test_change_password(self):
 
-        password= 'fooboo2@1!##r43df'
+        password = 'fooboo2@1!##r43df'
         user = User.objects.create_user(
             email='normal2@user.com',
             password=password,

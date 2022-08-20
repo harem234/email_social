@@ -1,6 +1,7 @@
+from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 from django.db import transaction
-from django.contrib.auth import get_user_model
+
 from social.models import SocialAccount, SocialProvider
 
 """
