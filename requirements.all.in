@@ -1,4 +1,4 @@
-django==3.2.*
+django==4.1.*
 
 google-auth-oauthlib
 requests
@@ -7,9 +7,6 @@ whitenoise[brotli]
 
 # compress and compile static files
 # django_compressor
-
-# gevent required for celery and gunicorn
-gunicorn
 
 # psycopg2 with Greenlet threads
 # psycogreen
@@ -27,6 +24,7 @@ Werkzeug
 
 # production server
 daphne
+gunicorn
 
 # daphne http2 and tsl and https
 Twisted[tls,http2]

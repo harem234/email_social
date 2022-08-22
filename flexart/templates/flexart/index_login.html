@@ -8,6 +8,10 @@
     <link href="{% static "flexart/css/minimal-slider.css" %}" rel='stylesheet' type='text/css'/>
     <!-- //banner slider css -->
 
+    <!-- font awesome css -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          rel="stylesheet">
+
     <!-- google -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <!-- //google -->
@@ -459,10 +463,13 @@
                                 {% endif %}
 
                                 <div class="form-group">
+
                                     <label class="mb-2" for="exampleInputEmail1"> {{ form.username.label }}</label>
                                     <input type="email" class="form-control" id="exampleInputEmail1"
-                                           aria-describedby="emailHelp" placeholder="example@email.com" required=""
-                                           name="username">
+                                           aria-describedby="emailHelp" placeholder="example@email.com"
+                                           required
+                                           name="username"
+                                    >
 
                                     <small id="emailHelp" class="form-text text-muted">
                                         We'll never share your email with anyone.</small>
@@ -479,15 +486,17 @@
                                         {{ request.GET.cancel }}{% else %}{% url 'FLEX:index' %}{% endif %}"
                                    type="button" class="mb-4 float-right btn btn-outline-dark ">Cancel</a>
 
-                                <!-- font awesome css -->
-                                <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-                                      rel="stylesheet">
-                                <div class="btn-group">
-                                    <a class='btn btn-danger disabled'><i class="fa fa-google"
-                                                                          style="width:16px; height:20px"></i></a>
+                                <div class="btn-group mx-auto" role="group">
+
+                                    <a class='btn btn-danger disabled'>
+                                        <i class="fa fa-google" style="width:16px; height:20px"></i>
+                                    </a>
+
                                     <a class='btn btn-danger'
                                        href="{% url 'google_call' 'google_callback_login_signup' %}"
-                                       style="width:12em;">Continue by Google</a>
+                                       style="width:12em;">Continue by Google
+                                    </a>
+
                                 </div>
 
 

@@ -1,18 +1,15 @@
-django==3.*
+django==4.1.*
 
 google-auth-oauthlib
 requests
 
 whitenoise[brotli]
 
-
-# gevent required for celery and gunicorn
+# production server
+daphne
 gunicorn
 
-# psycopg2 with Greenlet threads
-# psycogreen
-# django-db-geventpool
-
-# heroku
-# django-heroku
+# daphne http2 and tsl and https
+Twisted[tls,http2]
+pyopenssl
 
