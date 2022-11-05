@@ -12,9 +12,6 @@ whitenoise[brotli]
 # psycogreen
 # django-db-geventpool
 
-# heroku
-# django-heroku
-
 # development
 django-extensions
 
@@ -29,3 +26,15 @@ gunicorn
 # daphne http2 and tsl and https
 Twisted[tls,http2]
 pyopenssl
+
+# CSP headers in template
+django-csp
+
+# data base client
+dj-database-url
+
+# sudo apt-get install libpq-dev
+psycopg2
+
+# check for vulnerability
+pip-audit

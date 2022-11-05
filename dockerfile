@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.10.7-bullseye
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -21,8 +21,8 @@ COPY . /opt/email_user_prj
 RUN pip install --upgrade pip pip-tools; \
     python3.10 -m venv ~/envs/prj_env; \
     source ~/envs/prj_env/bin/activate; \
-    pip-compile requirements.all.in --pip-args "--retries 10 --timeout 59"; \
+    pip-compile /opt/email_user_prj/requirements.all.in --output-file /opt/email_user_prj/requirements.all.debian.txt --pip-args "--retries 10 --timeout 60" ; \
 #    --generate-hashes requirements.all.in \
 #    for production \
 #
-    pip-sync requirements.all.txt;
+    pip-sync /opt/email_user_prj/requirements.all.debian.txt;

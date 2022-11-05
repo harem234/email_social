@@ -9,3 +9,5 @@
 __pycache__
 # DJ_EmailUser_Social/settings/local.py
 Dockerfile
+requirements.*.txt
+venv
