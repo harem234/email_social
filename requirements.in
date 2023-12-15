@@ -1,4 +1,7 @@
-django==4.1.*
+pip-tools
+pip-audit
+
+django==4.2.*
 
 google-auth-oauthlib
 requests
