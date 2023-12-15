@@ -1,4 +1,3 @@
-pip-tools
 pip-audit
 
 django==4.2.*
