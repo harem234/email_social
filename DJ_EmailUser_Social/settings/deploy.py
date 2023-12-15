@@ -119,6 +119,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'user.authentication_backends.OTPTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 # django.contrib.sites
 SITE_ID = 1
 
