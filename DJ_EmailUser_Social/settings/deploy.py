@@ -31,8 +31,6 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     # apps
     'flexart.apps.FlexartConfig',
-    'ALSTAR.apps.AlstarConfig',
-    'philosophy.apps.PhilosophyConfig',
     'user.apps.UserConfig',
     'social.apps.SocialConfig',
     'SocialGoogle.apps.SocialGoogleConfig',
@@ -43,6 +41,7 @@ INSTALLED_APPS = [
     # development
     # 'django_extensions',
 
+    "corsheaders",
     'whitenoise',
 ]
 
@@ -50,6 +49,7 @@ MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'csp.middleware.CSPMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -248,11 +248,22 @@ DISABLE_SERVER_SIDE_CURSORS = True
 
 # # END heroku
 
+# CORS headers http
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+    "http://127.0.0.1:9000",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    # "https://read-and-write.example.com",
+    "http://localhost:8080",
+    "http://127.0.0.1:9000",
+]
 
 # CSP headers for template
 
 # uri to report policy violations
-CSP_REPORT_URI = '<add your reporting uri>'
+# CSP_REPORT_URI = '<add your reporting uri>'
   
 # default source as self
 CSP_DEFAULT_SRC = (

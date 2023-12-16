@@ -1,5 +1,3 @@
-pip-audit
-
 django==4.2.*
 
 google-auth-oauthlib
@@ -14,4 +12,20 @@ gunicorn
 # daphne http2 and tsl and https
 Twisted[tls,http2]
 pyopenssl
+
+# CSP headers in template
+django-csp
+
+# CORS http headers
+django-cors-headers
+
+# data base client
+dj-database-url
+
+# sudo apt-get install libpq-dev
+# psycopg2
+psycopg==3.*
+
+# check for vulnerability
+pip-audit
 
