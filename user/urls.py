@@ -1,14 +1,14 @@
 from django.contrib.auth import views as auth_view
 from django.urls import path, reverse_lazy
 from django.views.generic import TemplateView
-
-from .views import PostLogoutView, CustomPasswordChangeView, VerifyEmailView
+from django.contrib.auth import views as auth_views
+from .views import LogoutView, CustomPasswordChangeView, EmailVerifyView
 
 urlpatterns = [
     path('login/',
          auth_view.LoginView.as_view(template_name='registration/login.html', success_url=reverse_lazy('login')),
          name='login'),
-    path('logout/', PostLogoutView.as_view(), name='logout'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('logged_out/',
          TemplateView.as_view(template_name='registration/logged_out.html'), name='logout_post'),
 
@@ -29,18 +29,20 @@ urlpatterns = [
 
     # request verify email
     path(
-        'email/request-verify-email-page/',
-        TemplateView.as_view(template_name='registration/request_verify_email.html'),
-        name='request_verify_email_page',
+        'email/email-confirm-request/',
+        EmailVerifyView.as_view(),
+        name='email_verify',
     ),
 
     path(
         'email/request-verify-email/',
-        VerifyEmailView.as_view(),
+        EmailVerifyView.as_view(),
         name='email_request_verify'),
 
     path(
         'email/verify-email/<uidb64>/<token>/',
-        VerifyEmailView.as_view(),
-        name='email_verify'),
+        EmailVerifyView.as_view(),
+        name='email_verification_link'),
+
+    path('admin/login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
 ]

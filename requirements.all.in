@@ -1,4 +1,5 @@
-django==4.1.*
+pip-tools
+django==4.2.*
 
 google-auth-oauthlib
 requests
@@ -19,7 +20,7 @@ django-extensions
 pyOpenSSL
 Werkzeug
 
-# production server
+# production servers
 daphne
 gunicorn
 
@@ -30,11 +31,15 @@ pyopenssl
 # CSP headers in template
 django-csp
 
-# data base client
+# CORS http headers
+django-cors-headers
+
+# data base URL client
 dj-database-url
 
 # sudo apt-get install libpq-dev
-psycopg2
+# psycopg3
+psycopg==3.*
 
 # check for vulnerability
 pip-audit

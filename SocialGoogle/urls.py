@@ -4,11 +4,11 @@ from django.views.generic import TemplateView
 from . import views
 
 urlpatterns = [
-    # caller (calls google api) and assign the redirect url from the google by the next_call argument
+    # caller (calls google api) and assign the redirect url from the Google by the next_call argument
     # argument: next_call is the name of the url will be resolved and send as redirect url to google API
     path('google/api_caller/<str:next_call>/', views.google_call, name='google_call'),
 
-    # call backs from google api (use these url names in <str:next_call> in the upper)
+    # call backs from Google api (use these url names in <str:next_call> in the upper)
     path('google/callback/signup/', views.google_callback_signup, name='google_callback_signup'),
     path('google/callback/login/', views.google_callback_login, name='google_callback_login'),
     path('google/callback/login_signup/', views.google_callback_login_signup, name='google_callback_login_signup'),

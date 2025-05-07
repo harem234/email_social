@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from .forms import CustomUserChangeForm, CustomUserCreationForm
+from .forms import CustomUserChangeForm, CustomUserCreationForm, CustomPasswordChangeForm
 from .models import EmailUser
 
 
@@ -14,9 +14,7 @@ class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
 
-    # fieldsets = UserAdmin.fieldsets + (
-    #     (_('extended'), {'fields': ('site', 'isEmailVerified',)}),
-    # )
+    change_password_form = CustomPasswordChangeForm
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),

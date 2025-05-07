@@ -4,7 +4,7 @@ from django.urls import path, reverse_lazy
 from django.views.generic import TemplateView
 
 from user.views import SignUpView, CustomLoginView, CustomPasswordChangeView, CustomPasswordChangeDoneView, \
-    PostLogoutView
+    LogoutView
 
 app_name = 'FLEX'
 
@@ -32,7 +32,7 @@ urlpatterns = [
     path('index/', TemplateView.as_view(template_name='flexart/index.html'), name="index"),
 
     # login logout signup
-    path('logout/', PostLogoutView.as_view(next_page=reverse_lazy('FLEX:index'), template_name='flexart/index.html'),
+    path('logout/', LogoutView.as_view(next_page=reverse_lazy('FLEX:index'), template_name='flexart/index.html'),
          name="logout"),
 
     # path('logged_out/',

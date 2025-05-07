@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'django-moon.herokuapp.com']
 
 # Application definition
 INSTALLED_APPS = [
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,21 +38,21 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.sitemaps',
-    # apps
+
     'flexart.apps.FlexartConfig',
-    'ALSTAR.apps.AlstarConfig',
-    'philosophy.apps.PhilosophyConfig',
-    'user.apps.UserConfig',
+
+    'user',
+
     'social.apps.SocialConfig',
     'SocialGoogle.apps.SocialGoogleConfig',
-
-    # django_compressor
-    # 'compressor',
 
     'django_extensions',
 
     'whitenoise',
 ]
+
+# django_compressor
+# 'compressor',
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

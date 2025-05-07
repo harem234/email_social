@@ -15,14 +15,17 @@
 </head>
 
 <body>
-<p>{{ request.site }}</p>
-{{ debug }}
-<form method="post" action="{% url 'email_request_verify' %}">
-    {% csrf_token %}
-    <p> {% trans "your email is" %}: {{ request.user.email }} </p>
-    <input type="submit" value={% trans "send verification email" %}>
-    <input type="hidden" name="next" value="{{ next }}">
-</form>
+
+<h3>Hello {{ user }} from {{ request.site }}</h3>
+
+<p>You requested email to verify your email</p>
+
+<p>Click the link below please to verify your email</p>
+
+
+{#{% autoescape off %}#}
+{#{% endautoescape %}#}
+<a href="{{ protocol }}://{{ domain }}{% url 'email_verification_link' uidb64=uid token=token %}">{% trans 'click me for verifying your email' %}</a>
 
 </body>
 

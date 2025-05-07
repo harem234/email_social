@@ -19,7 +19,7 @@ def check_otp_token_and_authenticate_redis(otp_token, user):
 class OTPTokenBackend(ModelBackend):
 
     def user_can_authenticate(self, user):
-        # already checked by OTPToken.check_otp_token_db function as part of the query
+        # already checked by user.models.OTPToken.check_otp_token_and_authentication function as part of the query
         pass
 
         # """
@@ -35,7 +35,7 @@ class OTPTokenBackend(ModelBackend):
         except User.DoesNotExist:
             return None
         else:
-            if OTPToken.check_otp_token_and_authenticate_db(user.pk, otp_token, ):
+            if OTPToken.check_otp_token_and_authentication(user.pk, otp_token, ):
                 return user
 
     def get_user(self, user_id):

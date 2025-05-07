@@ -26,10 +26,9 @@ sitemaps = {
 
 urlpatterns = [
     path('flex/', include('flexart.urls')),
-    path('ALSTAR/', include('ALSTAR.urls')),
-    path('philosophy/', include('philosophy.urls')),
     path('accounts/', include('user.urls')),
     path('', include('SocialGoogle.urls')),
+    # TODO check name !
     path(
         'sitemap.xml',
         sitemap,

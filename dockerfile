@@ -1,8 +1,8 @@
 FROM python:3.10.7-bullseye
 
 # set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 # for google api scopes error: 'scopes changed from "some scope" to "some other scope"'
 ENV OAUTHLIB_RELAX_TOKEN_SCOPE=True
 

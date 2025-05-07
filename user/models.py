@@ -1,20 +1,17 @@
-import datetime
 import re
 from datetime import timedelta
 
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, User
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.db import models, transaction
 from django.db.models import Case, When, Q, F, Value
 from django.db.models.functions import Now
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth import get_user_model
-from user.authenticate_utils import generate_otp
 
-User = get_user_model()
+from user.authenticate_utils import generate_otp
 
 
 def validate_mobile_phone(number: str):
@@ -71,19 +68,20 @@ class EmailUserManager(BaseUserManager):
 
 
 class EmailUser(AbstractUser):
+
     site = models.ForeignKey(
-        _("site"),
         to=Site,
         on_delete=models.CASCADE,
+        related_name="sites",
         null=False,
         blank=False,
-        related_name="sites",
         default=settings.SITE_ID,
     )
 
     email = models.EmailField(
         _("email"),
         unique=True, null=False, blank=False, )
+
     mobile_phone = models.CharField(
         _("mobile phone"),
         unique=True, null=False, blank=False, max_length=19,
@@ -99,7 +97,7 @@ class EmailUser(AbstractUser):
         help_text=_(
             "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
         ),
-        validators=[AbstractUser.username_validator],
+        validators=(AbstractUser.username_validator,),
         error_messages={
             "unique": _("A user with that username already exists."),
         },
@@ -126,9 +124,14 @@ class EmailUser(AbstractUser):
     objects = EmailUserManager()
 
     USERNAME_FIELD = 'email'
-    MOBILE_FIELD = 'mobile_phone'
+    MOBILE_FIELD = 'mobile'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = [ ]
+
+    class Meta:
+        verbose_name = _("user")
+        verbose_name_plural = _("users")
+        abstract = False
 
     @classmethod
     def get_mobile_phone_field_name(cls) -> str:
@@ -159,22 +162,34 @@ class OTPToken(models.Model):
         (STATUS_UNUSABLE, 'Unusable'),
     )
 
-    user = models.OneToOneField(
-        _("user"),
-        to=User,
+    SEND_BY_SMS = 0
+    SEND_BY_EMAIL = 1
+    SEND_BY_CHOICES = (
+        (SEND_BY_SMS, 'SMS'),
+        (SEND_BY_EMAIL, 'Email'),
+    )
+
+    user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
         on_delete=models.DO_NOTHING,
         null=False,
         blank=False,
-        related_name="user",
+        related_name="tokens",
+        related_query_name="tokens",
     )
 
-    # TODO what method to use for sending the token
+    send_by = models.fields.PositiveSmallIntegerField(
+        _('status'),
+        null=False, blank=False, default=SEND_BY_EMAIL, choices=SEND_BY_CHOICES,
+    )
+
     created_at = models.DateTimeField(
         _("created at"),
-        auto_now_add=True, null=False, blank=False, editable=False)
+        auto_now_add=True, null=False, blank=False, editable=False,
+    )
     otp_token = models.fields.CharField(
         _("otp token"),
-        max_length=19, null=False, blank=False, editable=False, default='hell-no',
+        max_length=19, null=False, blank=False, editable=False,
     )
     status = models.fields.PositiveSmallIntegerField(
         _('status'),
@@ -182,17 +197,13 @@ class OTPToken(models.Model):
     )
 
     class Meta:
-        ordering = ["-created_at", "author"]
+        ordering = ["-created_at", "user_id"]
 
     @classmethod
-    def check_otp_token_and_authenticate_db(
-            cls,
-            user_pk: int,
-            otp_token: str,
-    ) -> bool:
+    def check_otp_token_and_authentication(cls, user_pk: int, otp_token: str, ) -> bool:
 
         """
-        one time token and guarantee no race condition no d lock  trying to log in, use token more than once
+        one time token and guarantee no race condition no deadlock trying to log in, use token more than once
         @param otp_token:
         @param user_pk:
 
@@ -206,25 +217,25 @@ class OTPToken(models.Model):
 
                         Q(user_pk=user_pk)
                         &
-                        Q(is_active=True)
+                        Q(user__is_active=True)
                         &
                         Q(otp_token=otp_token)
                         &
                         Q(
-                            (F('created_at') + timedelta(seconds=90)) < Now()
+                            (F('created_at') + timedelta(seconds=99)) < Now()
                         )
                         &
                         Q(status=OTPToken.STATUS_READY)
                         ,
 
-                        then=Value(value=OTPToken.STATUS_USED, output_field=models.PositiveSmallIntegerField, ),
+                        then=Value(value=OTPToken.STATUS_USED, output_field=models.fields.PositiveSmallIntegerField, ),
                     ),
 
-                    default=Value(value=F('status'), output_field=models.PositiveSmallIntegerField, )
+                    default=Value(value=F('status'), output_field=models.fields.PositiveSmallIntegerField, )
                     ,
 
-                )
-            ).select_for_update()
+                ).select_for_update(nowait=False)
+            )
 
             if have_updated == 1:
                 return True
@@ -236,24 +247,20 @@ class OTPToken(models.Model):
             return False
 
     @classmethod
-    def generate_otp_token_db(cls, user_pk: int, mobile_phone: str, ) -> None:
+    def create_otp_token(cls, user_pk: int, send_by: int, ) -> ["OTPToken" , None]:
         """
         one time token and guarantee no race condition no deadlock trying to log in, use token more than once
-        @param mobile_phone:
+        @param send_by:
         @param user_pk:
 
-        @return: otp token
+        @return: otp token object
         """
 
         # generate otp token every 100 seconds per user id
         seconds_since_user_last_token = OTPToken.objects.filter(
             Q(user_pk=user_pk)
             &
-            Q(is_active=True)
-            &
-            Q(
-                (F('created_at') + timedelta(seconds=100)) < Now()
-            )
+            Q(user__is_active=True)
         ).order_by('-created_at')[0:1].annotate(
             time_passed_token=Now() - F('created_at')
         )
@@ -261,7 +268,7 @@ class OTPToken(models.Model):
         if len(seconds_since_user_last_token) > 0:
             seconds_since_user_last_token = seconds_since_user_last_token[0].time_passed_token
             if seconds_since_user_last_token < 100:
-                return
+                return None
 
         # if it has not been 100 seconds since the last token that been generated for the user just return the value
         # remaining = datetime.datetime.now() - (last_user_token['created_at'] + timedelta(100))
@@ -269,9 +276,11 @@ class OTPToken(models.Model):
         # if remaining < timedelta(0):
         #     return remaining
 
+        # if there is no token for the user or token has passed 100 seconds limit generate new one
         with transaction.atomic():
-            OTPToken.objects.create(
+            return OTPToken.objects.create(
                 user_pk=user_pk,
-                mobile_phone=mobile_phone,
                 otp_token=generate_otp(),
+                send_by=send_by,
+                status=cls.STATUS_READY
             )

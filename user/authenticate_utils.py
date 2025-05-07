@@ -1,12 +1,11 @@
-# OTP token generator
-# import library
 import math
 import random
+from django.conf import settings
+import logging
 
-from user.models import OTPToken
+logger = logging.getLogger('django')
 
 
-# function to generate OTP token
 def generate_otp():
     # Declare a digits variable
     # which stores all digits
@@ -19,4 +18,13 @@ def generate_otp():
         otp_token += digits[math.floor(random.random() * 10)]
 
     return otp_token
+
+def send_otp_token(otp_obj):
+    if getattr(settings, 'LOCAl_OTP_SMS', False) is True:
+        # warning on debug mode false
+        # print(otp_obj.otp_token)
+        logger.info(otp_obj.otp_token)
+    else:
+        # todo add sms api
+        pass
 

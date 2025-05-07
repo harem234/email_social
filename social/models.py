@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.db import models
+from django.core.validators import EmailValidator
 
 
 # signal: pre_delete is set for SocialProvider
@@ -48,18 +49,25 @@ def get_sentinel_socialprovider():
 # Site.objects.get_current()
 
 class SocialAccount(models.Model):
-    from django.core.validators import EmailValidator
-
     site = models.ForeignKey(to=Site, on_delete=models.CASCADE, null=False, blank=False,
                              related_name="socialaccount_site", default=settings.SITE_ID)
 
-    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=False, blank=False,
-                             related_name="socialaccount_user")
+    user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+        related_name="socialaccount_user",
+    )
 
     # signal: pre_delete is set for SocialAccount
     # on_delete: do Not delete social accounts on deleting a provider
-    provider = models.ForeignKey(to=SocialProvider, on_delete=models.SET(get_sentinel_socialprovider), blank=False,
-                                 null=False)
+    provider = models.ForeignKey(
+        to=SocialProvider,
+        on_delete=models.SET(get_sentinel_socialprovider),
+        blank=False,
+        null=False,
+    )
 
     social_id = models.CharField(blank=False, null=False, max_length=1000, )
     isConnected = models.BooleanField(null=False, blank=False, default=False, )
@@ -70,7 +78,7 @@ class SocialAccount(models.Model):
     scopes = models.TextField(blank=False, null=True, max_length=1000, )
 
     def __str__(self):
-        return self.user.email + "::" + self.provider.social
+        return f'{self.user.email}  :: {self.provider.social}'
 
     class Meta:
         verbose_name = 'Social_Account'

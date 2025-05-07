@@ -14,7 +14,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'django-moon.herokuapp.com', ]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', ]
 
 # development
 # ALLOWED_HOSTS = ['*']
@@ -165,7 +165,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # whitenoise and django-compressor
 WHITENOISE_MAX_AGE = 31536000
 
-# allow cross origin request for public static files
+# allow cross-origin request for public static files
 WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 # Stores only files with hashed names in STATIC_ROOT
@@ -270,7 +270,7 @@ CSP_DEFAULT_SRC = (
     "'self'",
 )
   
-# style from our domain and bootstrapcdn
+# style from our domain and bootstrap cdn
 CSP_STYLE_SRC = (
     "'self'", 
     "fonts.googleapis.com",
