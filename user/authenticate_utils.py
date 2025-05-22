@@ -1,30 +1,47 @@
-import math
 import random
 from django.conf import settings
 import logging
 
-logger = logging.getLogger('django')
+LOGGER = logging.getLogger(__name__)
 
+
+def send_otp_token_local(otp_obj):
+    # warning on debug mode false
+    # print(otp_obj.otp_token)
+    # LOGGER.info(otp_obj.otp_token)
+    print(otp_obj)
+
+def send_otp_token_third_party_api(otp_obj):
+    pass #TODO
+
+def otp_token_send_mode():
+
+    local_otp_sms = getattr(settings, 'DEBUG') # TODO load LOCAl_OTP_SMS some how at module loading
+    print(__name__, 'LOCAl_OTP_SMS', '==', local_otp_sms)
+
+    if local_otp_sms:
+
+        def send_otp_token(otp_obj):
+            send_otp_token_local(otp_obj)
+    else:
+
+        def send_otp_token(otp_obj):
+            send_otp_token_third_party_api(otp_obj)
+
+    return send_otp_token
+
+send_otp_token = otp_token_send_mode()
+
+send_otp_token('123456789_123')
 
 def generate_otp():
-    # Declare a digits variable
-    # which stores all digits
-    digits = "0123456789"
-    otp_token = ""
 
     # length of password can be changed
-    # by changing value in range
-    for i in range(8):
-        otp_token += digits[math.floor(random.random() * 10)]
+    otp_token = random.randint(100_000_000, 999_999_999)
 
     return otp_token
 
-def send_otp_token(otp_obj):
-    if getattr(settings, 'LOCAl_OTP_SMS', False) is True:
-        # warning on debug mode false
-        # print(otp_obj.otp_token)
-        logger.info(otp_obj.otp_token)
-    else:
-        # todo add sms api
-        pass
+
+
+
 

@@ -24,7 +24,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'django-moon.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'wsl.localhost']
 # ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -90,13 +90,19 @@ WSGI_APPLICATION = 'DJ_EmailUser_Social.wsgi.application'
 # Custom user model
 AUTH_USER_MODEL = 'user.EmailUser'
 
+AUTHENTICATION_BACKENDS = [
+    'user.email_auth_backend.EmailBackend',
+    'user.otp_auth_backend.OTPTokenBackend',
+    'django.contrib.auth.backends.ModelBackend', # default, for admin access
+]
+
 DEFAULT_FROM_EMAIL = 'webmaster@localhost.lo'
 
 # email backend
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'DJ_EmailUser_Social', "temp", "sent_emails")
 
-# # Email: Send grid
+# # Email third party sender: Send grid
 # SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
 # EMAIL_HOST_USER = 'apikey'
 # EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
@@ -163,10 +169,10 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+# # Extra places for collectstatic to find static files.
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -189,6 +195,10 @@ WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 # Stores only files with hashed names in STATIC_ROOT
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
+
+# OTP settings #
+
+LOCAl_OTP_SMS = DEBUG
 
 # django-compress #
 

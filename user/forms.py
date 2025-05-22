@@ -1,8 +1,11 @@
 import logging
 
 from django.contrib.auth import get_user_model, authenticate
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm, PasswordResetForm, \
-    PasswordChangeForm, _unicode_ci_compare, UsernameField
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.forms import (
+    UserCreationForm, UserChangeForm, AuthenticationForm, PasswordResetForm, PasswordChangeForm, _unicode_ci_compare,
+    AdminPasswordChangeForm, AdminUserCreationForm, SetPasswordForm,
+)
 from django import forms
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
@@ -13,29 +16,76 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import capfirst
+from django.forms import EmailField
 
-
-from .models import validate_mobile_phone, OTPToken
+from .models import OTPToken, phone_regex
 from .send_to_apis import send_otp_to_console
 
-User = get_user_model()
-logger = logging.getLogger("dj_project.user.forms")
+User_model = get_user_model()
+logger = logging.getLogger(__name__)
+
+class CustomAuthenticationForm(AuthenticationForm):
+    """
+    class for authenticating users. Extend this to get a form that accepts
+    email/password logins.
+    """
+
+    username = forms.EmailField(
+            label=_('Email'),
+            widget=forms.TextInput(attrs={'autofocus': True})
+        )
+    password = forms.CharField(
+        label=_("Password"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "current-password"}),
+    )
+
+    error_messages = {
+        "invalid_login": _(
+            "Please enter a correct %(username)s and password. Note that both "
+            "fields may be case-sensitive."
+        ),
+        "inactive": _("This account is inactive."),
+    }
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
-        model = User
-        fields = '__all__'
+        model = User_model
+        fields = ("username",)
+        field_classes = {"username": EmailField}
 
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
-        model = User
-        fields = '__all__'
+        model = User_model
+        fields = "__all__"
+        field_classes = {"username": EmailField}
 
+
+# password change form
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     pass
 
+
+# password reset forms
+
+class CustomPasswordResetForm(PasswordResetForm):
+    pass
+
+class CustomSetPasswordForm(SetPasswordForm):
+    pass
+
+
+# Admin forms
+
+class CustomAdminPasswordChangeForm(AdminPasswordChangeForm):
+    pass
+
+class CustomAdminUserCreationForm(AdminUserCreationForm):
+    pass
+
+# verify email form
 # this is copied from PasswordResetForm and changed
 class EmailVerifyRequestForm(forms.Form):
     email = forms.EmailField(
@@ -80,8 +130,8 @@ class EmailVerifyRequestForm(forms.Form):
         that prevent inactive users and users with unusable passwords from
         resetting their password.
         """
-        email_field_name = User.get_email_field_name()
-        active_users = User._default_manager.filter(
+        email_field_name = User_model.get_email_field_name()
+        active_users = User_model._default_manager.filter(
             **{
                 "%s__iexact" % email_field_name: email,
                 "is_active": True,
@@ -116,7 +166,7 @@ class EmailVerifyRequestForm(forms.Form):
             domain = current_site.domain
         else:
             site_name = domain = domain_override
-        email_field_name = User.get_email_field_name()
+        email_field_name = User_model.get_email_field_name()
         for user in self.get_users(email):
             user_email = getattr(user, email_field_name)
             context = {
@@ -149,7 +199,7 @@ class MobileLinkPasswordResetForm(PasswordResetForm):
         label=_("mobile phone"),
         strip=True,
         widget=forms.widgets.TextInput(attrs={"autocomplete": "tel", "autofocus": True}),
-        validators=(validate_mobile_phone,)
+        validators=(phone_regex,)
     )
 
     def send_sms(
@@ -242,7 +292,7 @@ class OTPSMSRequestForm(forms.Form):
     mobile = forms.CharField(
         label=_("mobile"),
         widget=forms.TextInput(attrs={"autofocus": True}),
-        validators=(validate_mobile_phone,)
+        validators=(phone_regex,)
     )
 
     error_messages = {
@@ -261,7 +311,7 @@ class OTPSMSRequestForm(forms.Form):
         super().__init__(*args, **kwargs)
 
         # Set the max length and label for the "MOBILE_FIELD" field.
-        self.mobile_field = User._meta.get_field(User.MOBILE_FIELD)
+        self.mobile_field = User_model._meta.get_field(User_model.MOBILE_FIELD)
         mobile_max_length = self.mobile_field.max_length or 254
         self.fields["mobile"].max_length = mobile_max_length
         self.fields["mobile"].widget.attrs["mobile"] = mobile_max_length
@@ -269,8 +319,8 @@ class OTPSMSRequestForm(forms.Form):
             self.fields["mobile"].label = capfirst(self.mobile_field.verbose_name)
 
     def save(self):
-        mobile_field_name = User.get_mobile_field()
-        user_obj = User._default_manager.get(
+        mobile_field_name = User_model.get_mobile_field()
+        user_obj = User_model._default_manager.get(
             **{
                 "%s__iexact" % mobile_field_name: self.cleaned_data["mobile"],
                 "is_active": True,
@@ -290,7 +340,7 @@ class OTPAuthenticationForm(forms.Form):
 
         label=_("mobile"),
         widget=forms.TextInput(attrs={"autofocus": True}),
-        validators=(validate_mobile_phone,)
+        validators=(phone_regex,)
     )
 
     otp_token = forms.CharField(
@@ -301,9 +351,9 @@ class OTPAuthenticationForm(forms.Form):
 
     error_messages = {
         "invalid_login": _(
-            _("Please enter a correct OTP code with-in the time frame")
+            "Please enter a correct OTP code with-in the time frame"
         ),
-        "inactive": _("This account is inactive."),
+        "inactive": "This account is inactive.",
     }
 
     def __init__(self, request=None, *args, **kwargs):
@@ -315,7 +365,7 @@ class OTPAuthenticationForm(forms.Form):
         self.user_cache = None
         super().__init__(*args, **kwargs)
 
-        self.mobile_field = User._meta.get_field(User.MOBILE_FIELD)
+        self.mobile_field = User_model._meta.get_field(User_model.MOBILE_FIELD)
         mobile_max_length = self.mobile_field.max_length or 29
 
         self.fields["mobile_phone"].max_length = mobile_max_length

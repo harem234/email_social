@@ -1,0 +1,48 @@
+pip-tools
+
+django==5.2.*
+
+google-auth-oauthlib
+requests
+
+whitenoise[brotli]
+
+# compress and compile static files
+# django_compressor
+
+
+# development
+django-extensions
+
+# ssl, run python locally with HTTPS
+pyOpenSSL
+Werkzeug
+
+# production servers
+daphne
+gunicorn
+
+# daphne http2 and tsl and https
+Twisted[tls,http2]
+pyopenssl
+
+# CSP headers in template
+django-csp
+
+# CORS http headers
+django-cors-headers
+
+# data base URL client
+dj-database-url
+
+# sudo apt-get install libpq-dev gcc
+# psycopg3
+psycopg[c]==3.*
+
+# psycopg2 with Greenlet threads
+# psycogreen
+# django-db-geventpool
+
+
+# check for vulnerability
+pip-audit

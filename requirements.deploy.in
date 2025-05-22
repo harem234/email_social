@@ -1,0 +1,31 @@
+django==5.2.*
+
+google-auth-oauthlib
+requests
+
+whitenoise[brotli]
+
+# production server
+daphne
+gunicorn
+
+# daphne http2 and tsl and https
+Twisted[tls,http2]
+pyopenssl
+
+# CSP headers in template
+django-csp
+
+# CORS http headers
+django-cors-headers
+
+# client data base
+dj-database-url
+
+# sudo apt-get install libpq-dev gcc
+# psycopg2
+psycopg[c]==3.*
+
+# check for vulnerability
+pip-audit
+

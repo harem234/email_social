@@ -41,7 +41,7 @@
     </form>
 
     {#     Assumes you setup the password_reset view in your URLconf #}
-    {% url 'admin_password_reset' as password_reset_url %}
+    {% url 'password_reset' as password_reset_url %}
     {% if password_reset_url %}
         <div class="">
             <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>

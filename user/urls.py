@@ -1,7 +1,6 @@
 from django.contrib.auth import views as auth_view
 from django.urls import path, reverse_lazy
 from django.views.generic import TemplateView
-from django.contrib.auth import views as auth_views
 from .views import LogoutView, CustomPasswordChangeView, EmailVerifyView
 
 urlpatterns = [
@@ -43,6 +42,4 @@ urlpatterns = [
         'email/verify-email/<uidb64>/<token>/',
         EmailVerifyView.as_view(),
         name='email_verification_link'),
-
-    path('admin/login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
 ]

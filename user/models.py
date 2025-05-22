@@ -6,25 +6,31 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser, User
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.db import models, transaction
-from django.db.models import Case, When, Q, F, Value
+from django.db.models import Case, When, Q, F, Value, PositiveSmallIntegerField
 from django.db.models.functions import Now
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from user.authenticate_utils import generate_otp
 
 
-def validate_mobile_phone(number: str):
-    """Validates number start with '+98' or '0', then 10 digits"""
-    number_pattern = re.compile(r'^(?:\+98|0)\d{10}$')
-    result = number_pattern.match(number)
-    if result:
-        if number.startswith('0'):
-            return '+98' + number[1:]
-        return number
-    else:
-        raise ValidationError({'mobile_phone': 'Incorrect phone number format, must start with 0 or +98'})
+# def validate_mobile_phone(number: str):
+#     """Validates number start with '+98' or '0', then 10 digits"""
+#     number_pattern = re.compile(r'^(?:\+98|0)\d{10}$')
+#     result = number_pattern.match(number)
+#     if result:
+#         if number.startswith('0'):
+#             return '+98' + number[1:]
+#         return number
+#     else:
+#         raise ValidationError({'mobile_phone': 'Incorrect phone number format, must start with 0 or +98'})
 
+phone_regex = RegexValidator(
+        regex=r'^\+?\d{8,15}$',
+        message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."
+    )
 
 class EmailUserManager(BaseUserManager):
     """
@@ -80,12 +86,16 @@ class EmailUser(AbstractUser):
 
     email = models.EmailField(
         _("email"),
-        unique=True, null=False, blank=False, )
+        unique=True, null=False, blank=False,
+    )
 
     mobile_phone = models.CharField(
         _("mobile phone"),
-        unique=True, null=False, blank=False, max_length=19,
-        validators=(validate_mobile_phone,)
+        unique=True, null=True, blank=True, max_length=19,
+        validators=(phone_regex,),
+        help_text=_(
+            "at most 19 characters of digits only"
+        ),
     )
 
     username = models.CharField(
@@ -124,7 +134,7 @@ class EmailUser(AbstractUser):
     objects = EmailUserManager()
 
     USERNAME_FIELD = 'email'
-    MOBILE_FIELD = 'mobile'
+    MOBILE_FIELD = 'mobile_phone'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = [ ]
 
@@ -152,14 +162,15 @@ class OTPToken(models.Model):
 
     add vacuum base on created_at field
     """
-
-    STATUS_READY = 0
-    STATUS_USED = 1
-    STATUS_UNUSABLE = 2
+    STATUS_EMPTY = 0
+    STATUS_GENERATED = 1
+    STATUS_VERIFIED = 2
+    STATUS_NOT_VERIFIED = 3
     STATUS_CHOICES = (
-        (STATUS_READY, 'Ready'),
-        (STATUS_USED, 'Used'),
-        (STATUS_UNUSABLE, 'Unusable'),
+        (STATUS_GENERATED, 'Generated'),
+        (STATUS_VERIFIED, 'Verified'),
+        (STATUS_NOT_VERIFIED, 'Not Verified'),
+        (STATUS_EMPTY, 'EMPTY'),
     )
 
     SEND_BY_SMS = 0
@@ -187,20 +198,26 @@ class OTPToken(models.Model):
         _("created at"),
         auto_now_add=True, null=False, blank=False, editable=False,
     )
+
+    expire_at = models.DateTimeField(
+        _("expire at"),
+        auto_now=True, null=False, blank=False, editable=False,
+    )
+
     otp_token = models.fields.CharField(
         _("otp token"),
         max_length=19, null=False, blank=False, editable=False,
     )
     status = models.fields.PositiveSmallIntegerField(
         _('status'),
-        null=False, blank=False, default=STATUS_UNUSABLE, choices=STATUS_CHOICES,
+        null=False, blank=False, default=STATUS_EMPTY, choices=STATUS_CHOICES,
     )
 
     class Meta:
-        ordering = ["-created_at", "user_id"]
+        ordering = ["user_id", "-created_at", ]
 
     @classmethod
-    def check_otp_token_and_authentication(cls, user_pk: int, otp_token: str, ) -> bool:
+    def check_otp_token_and_can_authenticate(cls, user_pk: int, otp_token: str, ) -> bool:
 
         """
         one time token and guarantee no race condition no deadlock trying to log in, use token more than once
@@ -211,43 +228,18 @@ class OTPToken(models.Model):
         """
 
         with transaction.atomic():
-            have_updated = OTPToken.objects.update(
-                status=Case(
-                    When(
+            # lock raw
+            otp = OTPToken.objects.filter(user_pk=user_pk).select_for_update(nowait=True)[0]
+            if otp.otp_token == otp_token and otp.expire_at < timezone.now() and otp.status == OTPToken.STATUS_GENERATED:
+                otp.status = OTPToken.STATUS_VERIFIED
+            else:
+                otp.status = OTPToken.STATUS_NOT_VERIFIED
 
-                        Q(user_pk=user_pk)
-                        &
-                        Q(user__is_active=True)
-                        &
-                        Q(otp_token=otp_token)
-                        &
-                        Q(
-                            (F('created_at') + timedelta(seconds=99)) < Now()
-                        )
-                        &
-                        Q(status=OTPToken.STATUS_READY)
-                        ,
-
-                        then=Value(value=OTPToken.STATUS_USED, output_field=models.fields.PositiveSmallIntegerField, ),
-                    ),
-
-                    default=Value(value=F('status'), output_field=models.fields.PositiveSmallIntegerField, )
-                    ,
-
-                ).select_for_update(nowait=False)
-            )
-
-            if have_updated == 1:
-                return True
-            elif have_updated == 0:
-                return False
-            elif have_updated > 1:
-                raise ValidationError("warning: multiple OTP authentication is going on!")
-
-            return False
+            otp.save()
+            return otp.pk
 
     @classmethod
-    def create_otp_token(cls, user_pk: int, send_by: int, ) -> ["OTPToken" , None]:
+    def create_otp_token(cls, user_pk: int, send_by: int, ):
         """
         one time token and guarantee no race condition no deadlock trying to log in, use token more than once
         @param send_by:
@@ -256,31 +248,25 @@ class OTPToken(models.Model):
         @return: otp token object
         """
 
-        # generate otp token every 100 seconds per user id
-        seconds_since_user_last_token = OTPToken.objects.filter(
-            Q(user_pk=user_pk)
-            &
-            Q(user__is_active=True)
-        ).order_by('-created_at')[0:1].annotate(
-            time_passed_token=Now() - F('created_at')
-        )
-
-        if len(seconds_since_user_last_token) > 0:
-            seconds_since_user_last_token = seconds_since_user_last_token[0].time_passed_token
-            if seconds_since_user_last_token < 100:
-                return None
-
-        # if it has not been 100 seconds since the last token that been generated for the user just return the value
-        # remaining = datetime.datetime.now() - (last_user_token['created_at'] + timedelta(100))
-
-        # if remaining < timedelta(0):
-        #     return remaining
-
-        # if there is no token for the user or token has passed 100 seconds limit generate new one
         with transaction.atomic():
+
+            otp_qs = OTPToken.objects.filter(user_pk=user_pk).select_for_update(nowait=True).order_by('-created_at')[0:1]
+
+
+            if len(otp_qs) == 1:
+
+                otp = otp_qs[0:1].get()
+
+                if otp.expire_at < timezone.now():
+                    return otp
+
+                # else otp is expired
+
+            # so token is expired or there is no token for the user
+            otp_token = generate_otp()
             return OTPToken.objects.create(
                 user_pk=user_pk,
-                otp_token=generate_otp(),
+                otp_token=otp_token,
                 send_by=send_by,
-                status=cls.STATUS_READY
+                status=OTPToken.STATUS_GENERATED
             )

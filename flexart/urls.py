@@ -1,10 +1,8 @@
-from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, \
-    PasswordResetConfirmView
-from django.urls import path, reverse_lazy
+from django.urls import path, reverse_lazy, resolve
 from django.views.generic import TemplateView
 
-from user.views import SignUpView, CustomLoginView, CustomPasswordChangeView, CustomPasswordChangeDoneView, \
-    LogoutView
+from user.views import CustomLoginView, CustomPasswordChangeView, CustomPasswordChangeDoneView, \
+    CustomLogoutView, CustomSignUpView
 
 app_name = 'FLEX'
 
@@ -27,27 +25,42 @@ urlpatterns = [
     path('team/', TemplateView.as_view(template_name="flexart/team.html"),
          name="team"),
 
-    # home page
-
     path('index/', TemplateView.as_view(template_name='flexart/index.html'), name="index"),
 
-    # login logout signup
-    path('logout/', LogoutView.as_view(next_page=reverse_lazy('FLEX:index'), template_name='flexart/index.html'),
-         name="logout"),
+    # auth urls login logout signup
+
+
+    path('logout/', CustomLogoutView.as_view(
+        next_page=reverse_lazy('FLEX:index'),
+        template_name='flexart/index.html'
+        ),
+        name="logout"
+    ),
 
     # path('logged_out/',
-    #      TemplateView.as_view(template_name='flexart/index.html'), name='logout_post'),
+    #      TemplateView.as_view(template_name='flexart/index.html'), name='logged_out'),
 
-    path('login/', CustomLoginView.as_view(template_name='flexart/index_login.html',
-                                           extra_context={'next': reverse_lazy('FLEX:index')}), name="login"),
 
-    path('signup/',
-         SignUpView.as_view(success_url=reverse_lazy('FLEX:login'), template_name='flexart/index_register.html'),
-         name="signup"),
+    path('login/', CustomLoginView.as_view(
+            template_name='flexart/index_login.html',
+        ),
+        name="login"
+    ),
+
+    path(
+    'signup/',
+         CustomSignUpView.as_view(
+             success_url=reverse_lazy('FLEX:login'),
+             template_name='flexart/index_register.html'
+         ),
+         name="signup"
+    ),
 
     # password change
-    path('password_change/', CustomPasswordChangeView.as_view(template_name='flexart/index_password_change_form.html',
-                                                              success_url=reverse_lazy('FLEX:password_change_done')),
+    path('password_change/',
+         CustomPasswordChangeView.as_view(
+             template_name='flexart/index_password_change_form.html',
+             success_url=reverse_lazy('FLEX:password_change_done')),
          name="password_change"),
 
     path('password_change/done/',
@@ -56,23 +69,23 @@ urlpatterns = [
 
     # password reset
     # get email
-    path('password_reset/',
-         PasswordResetView.as_view(template_name='flexart/password_reset_form.html',
-                                   email_template_name='flexart/password_reset_email.html',
-                                   success_url=reverse_lazy('FLEX:password_reset_done')),
-         name='password_reset'),
-    # email found and send
-    path('password_reset/done/',
-         PasswordResetDoneView.as_view(template_name='flexart/password_reset_done.html'),
-         name='password_reset_done'),
-
-    # get the email and come to reset password page
-    path('reset/<uidb64>/<token>/',
-         PasswordResetConfirmView.as_view(template_name='flexart/password_reset_confirm.html',
-                                          success_url=reverse_lazy('FLEX:password_reset_complete')),
-         name='password_reset_confirm'),
-
-    path('reset/done/',
-         PasswordResetCompleteView.as_view(template_name='flexart/password_reset_complete.html'),
-         name='password_reset_complete'),
+    # path('password_reset/',
+    #      CustomPasswordResetView.as_view(template_name='flexart/password_reset_form.html',
+    #                                email_template_name='flexart/password_reset_email.html',
+    #                                success_url=reverse_lazy('FLEX:password_reset_done')),
+    #      name='password_reset'),
+    # # email found and send
+    # path('password_reset/done/',
+    #      PasswordResetDoneView.as_view(template_name='flexart/password_reset_done.html'),
+    #      name='password_reset_done'),
+    #
+    # # get the email and come to reset password page
+    # path('reset/<uidb64>/<token>/',
+    #      PasswordResetConfirmView.as_view(template_name='flexart/password_reset_confirm.html',
+    #                                       success_url=reverse_lazy('FLEX:password_reset_complete')),
+    #      name='password_reset_confirm'),
+    #
+    # path('reset/done/',
+    #      PasswordResetCompleteView.as_view(template_name='flexart/password_reset_complete.html'),
+    #      name='password_reset_complete'),
 ]

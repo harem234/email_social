@@ -120,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'user.authentication_backends.OTPTokenBackend',
+    'user.otp_auth_backend.OTPTokenBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
@@ -170,6 +170,10 @@ WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 # Stores only files with hashed names in STATIC_ROOT
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
+
+# OTP settings #
+
+LOCAl_OTP_SMS = DEBUG
 
 # Media URL
 MEDIA_URL = '/media/'

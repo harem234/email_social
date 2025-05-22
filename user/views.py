@@ -2,7 +2,7 @@ from django.contrib.auth import views, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator, PasswordResetTokenGenerator
 from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView, RedirectURLMixin, \
-    PasswordResetView
+    PasswordResetView, LogoutView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.http import HttpResponse
@@ -13,34 +13,37 @@ from django.utils.decorators import method_decorator
 from django.utils.encoding import force_str, force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
-from django.views import View
-from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.debug import sensitive_post_parameters
-from django.views.decorators.http import require_http_methods
 from django.views.generic import CreateView, FormView, TemplateView
 from django.conf import settings
 from django.contrib.auth.views import INTERNAL_RESET_SESSION_TOKEN
 
-from .forms import CustomUserCreationForm, OTPSMSRequestForm, OTPAuthenticationForm, EmailVerifyRequestForm
+from .forms import CustomUserCreationForm, OTPSMSRequestForm, OTPAuthenticationForm, EmailVerifyRequestForm, \
+    CustomAuthenticationForm, CustomPasswordResetForm, CustomSetPasswordForm
 
 User = get_user_model()
 
-
-@method_decorator(require_http_methods(("POST",)), name='dispatch')
-class LogoutView(views.LogoutView):
+class CustomLoginView(LoginView):
     """
-    only with Post request user can log out,
-    this adds more security.
+        Display the login form and handle the login action via email as username
     """
-    next_page = reverse_lazy('logout_post')
+    form_class = CustomAuthenticationForm
+    authentication_form = None
+    template_name = "registration/login.html"
+    redirect_authenticated_user = False
+    extra_context = {'next': reverse_lazy('FLEX:index')}
 
-    # @method_decorator(require_http_methods(["POST", ]))
-    # def dispatch(self, request, *args, **kwargs):
-    #     return super().dispatch(request, *args, **kwargs)
+class CustomLogoutView(LogoutView):
+    """
+    Log out the user and display the 'You are logged out' message.
 
+    only with Post request user can log out, this adds more security.
+    """
+    http_method_names = ["post", "options"]
+    template_name = "registration/logged_out.html"
+    # next_page = reverse_lazy('logout_post')
 
-class SignUpView(CreateView):
+class CustomSignUpView(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'registration/register.html'
@@ -51,33 +54,38 @@ class SignUpView(CreateView):
     # form instance name in context
     # context_form_name = 'signup_form'
 
-
-class CustomLoginView(LoginView):
-    """
-        Display the login form and handle the login action via email as username
-    """
-    template_name = 'registration/password_change_form.html'
-    extra_context = {'next': reverse_lazy('index')}
-
-
 class EmailPhoneLoginView(LoginView):
     template_name = 'registration/password_change_form.html'
     extra_context = {'next': reverse_lazy('index')}
 
 
-@method_decorator(login_required(login_url=reverse_lazy('login')), name='dispatch', )
 class CustomPasswordChangeView(PasswordChangeView):
     template_name = 'registration/password_change_form.html'
-    success_url = reverse_lazy('password_change_done')
+    # success_url = reverse_lazy('password_change_done')
 
-
-@method_decorator(login_required(login_url=reverse_lazy('login')), name='dispatch', )
 class CustomPasswordChangeDoneView(PasswordChangeDoneView):
     template_name = 'registration/password_change_done.html'
 
 
+class CustomPasswordResetView(PasswordResetView):
+    form_class = CustomPasswordResetForm
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = "registration/password_reset_done.html"
+    title = _("Password reset sent")
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    form_class = CustomSetPasswordForm
+    template_name = "registration/password_reset_confirm.html"
+    title = _("Enter new password")
+
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = "registration/password_reset_complete.html"
+    title = _("Password reset complete")
+
+# verify email
 class EmailVerifyView(FormView):
-    email_template_name = "registration/password_reset_email.html"
+    email_template_name = "registration/verify_email.html"
     extra_email_context = None
     form_class = EmailVerifyRequestForm
     from_email = None
