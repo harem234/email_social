@@ -1,6 +1,6 @@
 from django.contrib.auth import views, get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.tokens import default_token_generator, PasswordResetTokenGenerator
+from django.contrib.auth.tokens import PasswordResetTokenGenerator, default_token_generator
 from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView, RedirectURLMixin, \
     PasswordResetView, LogoutView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.core.exceptions import ValidationError
@@ -61,7 +61,7 @@ class EmailPhoneLoginView(LoginView):
 
 class CustomPasswordChangeView(PasswordChangeView):
     template_name = 'registration/password_change_form.html'
-    # success_url = reverse_lazy('password_change_done')
+    success_url = reverse_lazy('password_change_done')
 
 class CustomPasswordChangeDoneView(PasswordChangeDoneView):
     template_name = 'registration/password_change_done.html'
