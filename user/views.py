@@ -83,8 +83,8 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = "registration/password_reset_complete.html"
     title = _("Password reset complete")
 
-# verify email
-class EmailVerifyView(FormView):
+# verify email view: using django.contrib.auth.views.PasswordResetView as template
+class EmailVerifyView(PasswordResetView):
     email_template_name = "registration/verify_email.html"
     extra_email_context = None
     form_class = EmailVerifyRequestForm
@@ -92,73 +92,9 @@ class EmailVerifyView(FormView):
     html_email_template_name = None
     subject_template_name = "registration/verify_email_subject.txt"
     success_url = reverse_lazy("verify_email_done")
-    template_name = "registration/request_verify_email.html"
+    template_name = "registration/verify_email_form.html"
     title = _("Verify Email")
     token_generator = default_token_generator
-
-    # extra_context = None
-    #
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context.update(
-    #         {"title": self.title, "subtitle": None, **(self.extra_context or {})}
-    #     )
-    #     return context
-
-    def form_valid(self, form):
-        opts = {
-            "use_https": self.request.is_secure(),
-            "token_generator": self.token_generator,
-            "from_email": self.from_email,
-            "email_template_name": self.email_template_name,
-            "subject_template_name": self.subject_template_name,
-            "request": self.request,
-            "html_email_template_name": self.html_email_template_name,
-            "extra_email_context": self.extra_email_context,
-        }
-        form.save(**opts)
-        return super().form_valid(form)
-
-    # def get(self, request, uidb64=None, *args, **kwargs):
-    #     # validate users email
-    #
-    #     try:
-    #         uid = force_str(urlsafe_base64_decode(uidb64))
-    #         user = User.objects.get(pk=uid)
-    #     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-    #         user = None
-    #
-    #     if user is not None and default_token_generator.check_token(user, token):
-    #         user.is_email_verified = True
-    #         user.save()
-    #         return HttpResponse('Thank you for your email confirmation.')
-    #     else:
-    #         return HttpResponse('Activation link is invalid!')
-
-    @method_decorator(login_required(login_url=reverse_lazy('login')))
-    @method_decorator(csrf_protect)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
-
-    # def post(self, request, *args, **kwargs):
-    #     # verify user's email address
-    #
-    #     uid = urlsafe_base64_encode(force_bytes(request.user.pk))
-    #     token = default_token_generator.make_token(request.user)
-    #
-    #     template_context = {
-    #         'uid': uid,
-    #         'token': token,
-    #     }
-    #
-    #     email_body = render_to_string(
-    #         'registration/request_verify_email.html',
-    #         request=request,
-    #         context=template_context,
-    #     )
-    #
-    #     send_mail(_('verify email'), email_body, 'localhost@gmail.com', (request.user.f",))
-    #     return HttpResponse('Please confirm your email address to complete the registration')
 
 
 default_token_generator = PasswordResetTokenGenerator()
