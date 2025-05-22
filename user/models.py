@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractUser, User
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
-from django.db import models, transaction
+from django.db import models, transaction, DatabaseError
 from django.db.models import Case, When, Q, F, Value, PositiveSmallIntegerField
 from django.db.models.functions import Now
 from django.utils import timezone
@@ -208,17 +208,28 @@ class OTPToken(models.Model):
         _("otp token"),
         max_length=19, null=False, blank=False, editable=False,
     )
+
     status = models.fields.PositiveSmallIntegerField(
         _('status'),
         null=False, blank=False, default=STATUS_EMPTY, choices=STATUS_CHOICES,
     )
 
+    log_mobile_phone = models.CharField(
+        _("log mobile phone"),
+        null=False,
+        blank=True,
+        max_length=19,
+        help_text=_(
+            "at most 19 characters of digits only"
+        ),
+    )
+
     class Meta:
-        ordering = ["user_id", "-created_at", ]
+        ordering = [ "user_id", "-created_at", "-expire_at", ]
 
+    # todo add to celery
     @classmethod
-    def check_otp_token_and_can_authenticate(cls, user_pk: int, otp_token: str, ) -> bool:
-
+    def check_otp_token(cls, user_pk: int, otp_token: str, ) -> bool:
         """
         one time token and guarantee no race condition no deadlock trying to log in, use token more than once
         @param otp_token:
@@ -228,14 +239,28 @@ class OTPToken(models.Model):
         """
 
         with transaction.atomic():
-            # lock raw
-            otp = OTPToken.objects.filter(user_pk=user_pk).select_for_update(nowait=True)[0]
-            if otp.otp_token == otp_token and otp.expire_at < timezone.now() and otp.status == OTPToken.STATUS_GENERATED:
-                otp.status = OTPToken.STATUS_VERIFIED
-            else:
-                otp.status = OTPToken.STATUS_NOT_VERIFIED
 
-            otp.save()
+            # lock raw
+            for i in range(3):
+
+                try:
+                    otp = OTPToken.objects.filter(user_pk=user_pk).select_for_update(nowait=True)[0]
+
+                except DatabaseError:
+                    print("user.models:OTPToken.check_otp_token","at try:", i+1, DatabaseError)
+
+                else:
+
+                    if otp.otp_token == otp_token and otp.expire_at < timezone.now() and otp.status == OTPToken.STATUS_GENERATED:
+                        otp.status = OTPToken.STATUS_VERIFIED
+                    else:
+                        otp.status = OTPToken.STATUS_NOT_VERIFIED
+
+                    otp.save()
+
+                    # after successful access to user row in db do not try again
+                    break
+
             return otp.pk
 
     @classmethod
