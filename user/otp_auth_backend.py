@@ -26,7 +26,7 @@ class OTPTokenBackend(ModelBackend):
             UserModel().set_password(otp_token)
             return None
         else:
-            if OTPToken.check_otp_token_and_can_authenticate(user.pk, otp_token, ) and self.user_can_authenticate(user):
+            if OTPToken.check_otp_token(user.pk, otp_token, ) and self.user_can_authenticate(user):
                 return user
 
             return None
