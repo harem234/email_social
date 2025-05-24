@@ -229,39 +229,50 @@ class OTPToken(models.Model):
 
     # todo add to celery
     @classmethod
-    def check_otp_token(cls, user_pk: int, otp_token: str, ) -> bool:
+    def check_otp_token(cls, user_pk: int, otp_token: str, ) -> 'OTPToken':
         """
         one time token and guarantee no race condition no deadlock trying to log in, use token more than once
         @param otp_token:
         @param user_pk:
 
-        @return: true on validating otp token
+        @return: otp token object
         """
 
         with transaction.atomic():
 
-            # lock raw
             for i in range(3):
 
+                # try to lock raw where user has otp
                 try:
-                    otp = OTPToken.objects.filter(user_pk=user_pk).select_for_update(nowait=True)[0]
+                    otp_qs = OTPToken.objects.filter(
+                        user_pk=user_pk, otp_token=otp_token
+                    ).select_for_update(nowait=True)[0:1]
+
+                    otp = otp_qs[0]
 
                 except DatabaseError:
-                    print("user.models:OTPToken.check_otp_token","at try:", i+1, DatabaseError)
+                    print("user.models:OTPToken.check_otp_token ","at try:", i+1, "  -->  " , DatabaseError)
 
                 else:
 
-                    if otp.otp_token == otp_token and otp.expire_at < timezone.now() and otp.status == OTPToken.STATUS_GENERATED:
+                    if (
+                        otp.otp_token == otp_token
+                        and
+                        otp.expire_at < timezone.now()
+                        and
+                        otp.status == OTPToken.STATUS_GENERATED
+                    ):
+
                         otp.status = OTPToken.STATUS_VERIFIED
                     else:
                         otp.status = OTPToken.STATUS_NOT_VERIFIED
 
                     otp.save()
 
-                    # after successful access to user row in db do not try again
+                    # after successful access to user otp row in db do not try again
                     break
 
-            return otp.pk
+            return otp
 
     @classmethod
     def create_otp_token(cls, user_pk: int, send_by: int, ):
@@ -275,8 +286,7 @@ class OTPToken(models.Model):
 
         with transaction.atomic():
 
-            otp_qs = OTPToken.objects.filter(user_pk=user_pk).select_for_update(nowait=True).order_by('-created_at')[0:1]
-
+            otp_qs = OTPToken.objects.filter(user_pk=user_pk).order_by('-created_at').select_for_update(nowait=True)[0:1]
 
             if len(otp_qs) == 1:
 
@@ -287,7 +297,7 @@ class OTPToken(models.Model):
 
                 # else otp is expired
 
-            # so token is expired or there is no token for the user
+            # so token is expired or there is no token generated for the user
             otp_token = generate_otp()
             return OTPToken.objects.create(
                 user_pk=user_pk,

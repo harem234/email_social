@@ -30,8 +30,10 @@ class CustomLoginView(LoginView):
     form_class = CustomAuthenticationForm
     authentication_form = None
     template_name = "registration/login.html"
-    redirect_authenticated_user = False
-    extra_context = {'next': reverse_lazy('FLEX:index')}
+    redirect_authenticated_user = True
+
+    next_page = reverse_lazy('FLEX:index')
+    # extra_context = {'next': reverse_lazy('FLEX:index')}
 
 class CustomLogoutView(LogoutView):
     """
@@ -41,7 +43,7 @@ class CustomLogoutView(LogoutView):
     """
     http_method_names = ["post", "options"]
     template_name = "registration/logged_out.html"
-    # next_page = reverse_lazy('logout_post')
+    next_page = reverse_lazy('logged_out')
 
 class CustomSignUpView(CreateView):
     form_class = CustomUserCreationForm
