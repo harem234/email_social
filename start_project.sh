@@ -35,3 +35,5 @@ export SENDGRID_PASSWORD=october19101994
 export SENDGRID_API_KEY=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
 
 python manage.py collectstatic -v 3 --clear;
+
+python manage.py runserver wsl.localhost:8000

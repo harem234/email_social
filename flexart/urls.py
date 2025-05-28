@@ -2,7 +2,7 @@ from django.urls import path, reverse_lazy, resolve
 from django.views.generic import TemplateView
 
 from user.views import CustomLoginView, CustomPasswordChangeView, CustomPasswordChangeDoneView, \
-    CustomLogoutView, CustomSignUpView
+    CustomLogoutView, CustomRegisterView
 
 app_name = 'FLEX'
 
@@ -48,8 +48,8 @@ urlpatterns = [
     ),
 
     path(
-    'signup/',
-         CustomSignUpView.as_view(
+    'register/',
+         CustomRegisterView.as_view(
              success_url=reverse_lazy('FLEX:login'),
              template_name='flexart/index_register.html'
          ),

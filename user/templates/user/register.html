@@ -1,0 +1,18 @@
+<form action="{% url 'register' %}" method="POST">
+	{% csrf_token %}
+	<h2>register</h2>
+
+	{% for field in form %}
+	<p>
+		{% if field.errors %}
+		<ul class="error_li">
+			{% for error in field.errors %}
+			<li>{{ error }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+	 	{{ field.label_tag }} {{ field }}
+	</p>
+	{% endfor %}
+	<input type="submit" value="Register" />
+</form>

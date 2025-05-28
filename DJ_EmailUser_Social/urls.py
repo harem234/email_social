@@ -29,13 +29,13 @@ urlpatterns = [
     path('flex/', include('flexart.urls')),
     path('accounts/', include('user.urls')),
     path('', include('SocialGoogle.urls')),
+    path('admin/', admin.site.urls),
     path(
         'sitemap.xml',
         sitemap,
         {'sitemaps': sitemaps},
         name='sitemap',
     ),
-    path('admin/', admin.site.urls),
     path('google813daf404e148806.html',
          TemplateView.as_view(template_name='google813daf404e148806.html')
     ),

@@ -1,14 +1,15 @@
-# from django.contrib.auth import views as auth_view
-from django.urls import path, reverse_lazy
+from django.urls import path
 from django.views.generic import TemplateView
-from .views import CustomLogoutView, CustomPasswordChangeView, EmailVerifyView, CustomLoginView, \
+from .views import CustomLogoutView, CustomPasswordChangeView, CustomLoginView, \
     CustomPasswordChangeDoneView, CustomPasswordResetView, CustomPasswordResetDoneView, CustomPasswordResetConfirmView, \
-    CustomPasswordResetCompleteView
+    CustomPasswordResetCompleteView, CustomRegisterView, EmailVerifyView, EmailConfirmView, \
+    EmailVerifySentView
 
 urlpatterns = [
+
     path('login/',
          CustomLoginView.as_view(
-             template_name='registration/login.html',
+             template_name='user/login.html',
          ),
          name='login'
     ),
@@ -17,10 +18,17 @@ urlpatterns = [
 
     path('logged_out/',
          TemplateView.as_view(
-             template_name='registration/logged_out.html'
+             template_name='user/logged_out.html'
          ),
-         name='logout_post'),
+         name='logged_out'),
 
+    path('index/',
+             TemplateView.as_view(
+                 template_name='user/index.html'
+             ),
+             name='index'),
+
+    path('register/', CustomRegisterView.as_view(), name='register'),
 
     path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
 
@@ -31,44 +39,46 @@ urlpatterns = [
 
 
     path('password_reset/', CustomPasswordResetView.as_view(
-        template_name='registration/password_reset_form.html'
+        template_name='user/password_reset_form.html'
         ),
          name='password_reset'
     ),
 
     path('password_reset/done/',
          CustomPasswordResetDoneView.as_view(
-             template_name='registration/password_reset_done.html'
+             template_name='user/password_reset_done.html'
          ),
          name='password_reset_done'),
 
     path('reset/<uidb64>/<token>/',
          CustomPasswordResetConfirmView.as_view(
-             template_name='registration/password_reset_confirm.html'
+             template_name='user/password_reset_confirm.html'
          ),
          name='password_reset_confirm'),
 
     path('reset/done/',
          CustomPasswordResetCompleteView.as_view(
-             template_name='registration/password_reset_complete.html'
+             template_name='user/password_reset_complete.html'
          ),
          name='password_reset_complete'),
 
 
-    # request verify email
+    # email verification
+
+
     path(
-        'email/email-confirm-request/',
+        'email/email-verify-request/',
         EmailVerifyView.as_view(),
-        name='email_verify',
+        name='email_verify_request',
     ),
 
     path(
-        'email/request-verify-email/',
-        EmailVerifyView.as_view(),
-        name='email_request_verify'),
+        'email/email_verify_sent/',
+        EmailVerifySentView.as_view(),
+        name='email_verify_sent',),
 
     path(
-        'email/verify-email/<uidb64>/<token>/',
-        EmailVerifyView.as_view(),
+        'email/verify-email-link/<uidb64>/<token>/',
+        EmailConfirmView.as_view(),
         name='email_verification_link'),
 ]

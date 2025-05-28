@@ -29,7 +29,6 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'wsl.localhost']
 
 # Application definition
 INSTALLED_APPS = [
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,9 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
 
-    'flexart.apps.FlexartConfig',
-
     'user',
+    'flexart.apps.FlexartConfig',
 
     'social.apps.SocialConfig',
     'SocialGoogle.apps.SocialGoogleConfig',
@@ -96,7 +94,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend', # default, for admin access
 ]
 
-DEFAULT_FROM_EMAIL = 'webmaster@localhost.lo'
+DEFAULT_FROM_EMAIL = 'mahdi@wsl.localhost.out'
 
 # email backend
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"

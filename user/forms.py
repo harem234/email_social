@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import (
     UserCreationForm, UserChangeForm, AuthenticationForm, PasswordResetForm, PasswordChangeForm, _unicode_ci_compare,
-    AdminPasswordChangeForm, AdminUserCreationForm, SetPasswordForm,
+    AdminPasswordChangeForm, AdminUserCreationForm, SetPasswordForm, BaseUserCreationForm,
 )
 from django import forms
 from django.contrib.auth.tokens import default_token_generator
@@ -48,18 +48,39 @@ class CustomAuthenticationForm(AuthenticationForm):
         "inactive": _("This account is inactive."),
     }
 
-class CustomUserCreationForm(UserCreationForm):
+class CustomUserCreationForm(BaseUserCreationForm):
+
+    def clean_email(self):
+        """Reject emails that differ only in case."""
+        email = self.cleaned_data.get("email")
+        if (
+            email
+            and self._meta.model.objects.filter(email__iexact=email).exists()
+        ):
+            self._update_errors(
+                ValidationError(
+                    {
+                        "email": self.instance.unique_error_message(
+                            self._meta.model, ["email"]
+                        )
+                    }
+                )
+            )
+            return None
+        else:
+            return email
+
     class Meta:
         model = User_model
-        fields = ("username",)
-        field_classes = {"username": EmailField}
+        fields = ("email",)
+        field_classes = {"email": EmailField}
 
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = User_model
         fields = "__all__"
-        field_classes = {"username": EmailField}
+        field_classes = {"email": EmailField}
 
 
 # password change form
@@ -90,11 +111,12 @@ class CustomAdminUserCreationForm(AdminUserCreationForm):
 
 class EmailVerifyRequestForm(PasswordResetForm):
 
-    def save(*args, **kwargs):
+    def save(self, *args, **kwargs):
+        kwargs['token_generator'] = default_token_generator
+        kwargs['subject_template_name'] = "user/verify_email_subject.txt"
+        kwargs['email_template_name'] = "user/verify_email.html"
+
         super().save(
-            subject_template_name = "registration/email_verify_request_subject.txt",
-            email_template_name="registration/verify_email.html",
-            token_generator=default_token_generator,
             *args,
             **kwargs
         )

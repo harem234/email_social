@@ -24,7 +24,7 @@ else:
 
 SCOPES = ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile', ]
 
-# view names that require logged in user
+# view names that require log in user
 REQUIRE_LOGGED_IN_URL_NAMES = ['google_callback_add_social', 'google_callback_revoke']
 
 

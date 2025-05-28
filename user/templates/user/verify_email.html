@@ -4,7 +4,7 @@
 {% translate "Please Follow the link:" %}
 {% block reset_link %}
 {#    TODO   #}
-{{ protocol }}://{{ domain }}{% url '????' uidb64=uid token=token %}
+{{ protocol }}://{{ domain }}{% url 'email_verification_link' uidb64=uid token=token %}
 {% endblock %}
 {% translate 'In case you’ve forgotten, you are:' %} {{ user.get_username }}
 
