@@ -146,7 +146,7 @@ class EmailConfirmView(TemplateView):
                     )
                     return HttpResponseRedirect(redirect_url)
 
-        # Display the "Password reset unsuccessful" page.
+        # Display the "email confirm link is not valid" page.
         return self.render_to_response(self.get_context_data())
 
     @staticmethod
@@ -166,8 +166,6 @@ class EmailConfirmView(TemplateView):
             user = None
         return user
 
-
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.validlink:
@@ -184,7 +182,7 @@ class EmailConfirmView(TemplateView):
 # OTP authentication views
 
 
-class OTPRequestView(RedirectURLMixin, FormView):
+class TOTPLoginView(RedirectURLMixin, FormView):
 
     form_class = OTPSMSRequestForm
     authentication_form = None

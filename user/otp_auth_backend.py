@@ -19,7 +19,6 @@ class OTPTokenBackend(ModelBackend):
 
         try:
             user = UserModel._default_manager.get_by_natural_key(mobile_phone)
-            # user = UserModel.objects.get(mobile_phone=mobile_phone)
         except UserModel.DoesNotExist:
             # Run the default password hasher once to reduce the timing
             # difference between an existing and a nonexistent user (#20760).
