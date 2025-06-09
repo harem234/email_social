@@ -152,7 +152,7 @@ pyproject-hooks==1.2.0
     # via
     #   build
     #   pip-tools
-requests==2.32.3
+requests==2.32.4
     # via
     #   -r requirements.local.in
     #   cachecontrol
